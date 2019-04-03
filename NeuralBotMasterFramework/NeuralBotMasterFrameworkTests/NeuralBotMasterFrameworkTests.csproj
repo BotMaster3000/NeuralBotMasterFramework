@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Models\NodeTests.cs" />
+    <Compile Include="Models\WeightedNodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

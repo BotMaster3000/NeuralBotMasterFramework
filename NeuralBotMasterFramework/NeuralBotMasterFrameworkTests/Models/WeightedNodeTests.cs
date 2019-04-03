@@ -9,18 +9,32 @@ using System.Threading.Tasks;
 namespace NeuralBotMasterFramework.Models.Tests
 {
     [TestClass]
-    public class NodeTests
+    public class WeightedNodeTests
     {
         [TestMethod]
         public void AssignPropertyTest()
         {
             Random rand = new Random();
             double value = rand.NextDouble();
-            Node node = new Node
+            double[] weights = new double[]
             {
-                Value = value
+                rand.NextDouble(),
+                rand.NextDouble(),
+                rand.NextDouble(),
+            };
+            WeightedNode node = new WeightedNode()
+            {
+                Value = value,
+                Weights = weights
             };
             Assert.AreEqual(value, node.Value);
+            Assert.AreEqual(weights, node.Weights);
+        }
+
+        [TestMethod]
+        public void ApplyWeightTest()
+        {
+            Assert.Fail();
         }
     }
 }

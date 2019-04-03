@@ -9,8 +9,8 @@ namespace NeuralBotMasterFramework.Models
 {
     public class WeightedNode : IWeightedNode
     {
-        public double[] Weights { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double Value { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double[] Weights { get; set; }
+        public double Value { get; set; }
 
         public void ApplyWeight()
         {
