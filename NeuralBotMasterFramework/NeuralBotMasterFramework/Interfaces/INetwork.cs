@@ -10,7 +10,7 @@ namespace NeuralBotMasterFramework.Interfaces
     {
         ILayer InputLayer { get; set; }
 
-        void SetInput();
+        void SetInput(double[] input);
         void Propagate();
         double[] GetOutput();
     }

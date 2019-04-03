@@ -17,27 +17,30 @@ namespace NeuralBotMasterFramework.Logic
         public WeightedNetwork(int inputNodes, int hiddenLayers, int hiddenNodesPerLayer, int outputNodes)
         {
             InitializeInputNodes(inputNodes);
-            InitializeHiddenNodes(hiddenLayers, hiddenNodesPerLayer);
-            InitializeOutputNodes(outputNodes);
+            InitializeHiddenNodes(hiddenLayers, hiddenNodesPerLayer, inputNodes);
+            InitializeOutputNodes(outputNodes, hiddenNodesPerLayer);
         }
 
         private void InitializeInputNodes(int inputNodes)
         {
             InputLayer = new Layer(inputNodes);
-            throw new NotImplementedException();
         }
 
-        private void InitializeHiddenNodes(int hiddenLayers, int hiddenNodesPerLayer)
+        private void InitializeHiddenNodes(int totalHiddenLayers, int totalHiddenNodesPerLayer, int previousNodes)
         {
-            throw new NotImplementedException();
+            HiddenLayers = new IWeightedLayer[totalHiddenLayers];
+            for(int i = 0; i < totalHiddenLayers; ++i)
+            {
+                HiddenLayers[i] = new WeightedLayer(totalHiddenNodesPerLayer, previousNodes);
+            }
         }
 
-        private void InitializeOutputNodes(int outputNodes)
+        private void InitializeOutputNodes(int outputNodes, int previousNodes)
         {
-            throw new NotImplementedException();
+            OutputLayer = new WeightedLayer(outputNodes, previousNodes);
         }
 
-        public void SetInput()
+        public void SetInput(double[] input)
         {
             throw new NotImplementedException();
         }

@@ -13,17 +13,18 @@ namespace NeuralBotMasterFramework.Logic.Tests
     [TestClass]
     public class WeightedNetworkTests
     {
+        private const int INPUT_NODES = 3;
+        private const int HIDDEN_LAYERS = 5;
+        private const int HIDDEN_NODES_PER_LAYER = 10;
+        private const int OUTPUT_NODES = 3;
+        private readonly WeightedNetwork network = new WeightedNetwork(INPUT_NODES, HIDDEN_LAYERS, HIDDEN_NODES_PER_LAYER, OUTPUT_NODES);
+
         [TestMethod]
         public void ConstructorTest_SetupLayersCorrectly()
         {
-            const int INPUT_NODES = 10;
-            const int HIDDEN_LAYERS = 5;
-            const int HIDDEN_NODES_PER_LAYER = 10;
-            const int OUTPUT_NODES = 3;
-            WeightedNetwork network = new WeightedNetwork(INPUT_NODES, HIDDEN_LAYERS, HIDDEN_NODES_PER_LAYER, OUTPUT_NODES);
             Assert.AreEqual(INPUT_NODES, network.InputLayer.Nodes.Length);
             Assert.AreEqual(HIDDEN_LAYERS, network.HiddenLayers.Length);
-            foreach (ILayer node in network.HiddenLayers)
+            foreach (IWeightedLayer node in network.HiddenLayers)
             {
                 Assert.AreEqual(HIDDEN_NODES_PER_LAYER, node.Nodes.Length);
             }
@@ -33,8 +34,14 @@ namespace NeuralBotMasterFramework.Logic.Tests
         [TestMethod]
         public void SetInputTest()
         {
-            //WeightedNetwork network = new WeightedNetwork();
-            Assert.Fail();
+            Random rand = new Random();
+            double[] input = new double[INPUT_NODES]
+            {
+                rand.NextDouble(),
+                rand.NextDouble(),
+                rand.NextDouble(),
+            };
+            network.SetInput(input);
         }
 
         [TestMethod]

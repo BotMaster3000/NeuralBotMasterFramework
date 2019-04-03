@@ -27,5 +27,15 @@ namespace NeuralBotMasterFramework.Models
                 Nodes[i] = new Node();
             }
         }
+
+        public void SetValues(double[] input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double[] GetValues()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

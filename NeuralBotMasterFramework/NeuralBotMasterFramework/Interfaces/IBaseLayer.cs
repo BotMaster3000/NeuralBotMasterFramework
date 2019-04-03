@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace NeuralBotMasterFramework.Interfaces
 {
-    public interface IWeightedLayer : IBaseLayer
+    public interface IBaseLayer
     {
-        IWeightedNode[] Nodes { get; set; }
+        void SetValues(double[] input);
+        double[] GetValues();
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralBotMasterFramework.Interfaces
 {
-    public interface ILayer
+    public interface ILayer : IBaseLayer
     {
         INode[] Nodes { get; set; }
     }

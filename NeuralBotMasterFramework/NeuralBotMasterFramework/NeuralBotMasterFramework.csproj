@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper\RandomNumberGenerator.cs" />
+    <Compile Include="Interfaces\IBaseLayer.cs" />
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\INetwork.cs" />
     <Compile Include="Interfaces\IWeightedLayer.cs" />

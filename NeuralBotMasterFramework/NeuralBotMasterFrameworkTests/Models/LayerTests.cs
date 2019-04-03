@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NeuralBotMasterFramework.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NeuralBotMasterFramework.Interfaces;
 
 namespace NeuralBotMasterFramework.Models.Tests
@@ -27,6 +28,18 @@ namespace NeuralBotMasterFramework.Models.Tests
             const int TOTAL_NODES = 10;
             Layer layer = new Layer(TOTAL_NODES);
             Assert.AreEqual(TOTAL_NODES, layer.Nodes.Length);
+        }
+
+        [TestMethod]
+        public void SetValuesTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void GetValuesTest()
+        {
+            Assert.Fail();
         }
     }
 }

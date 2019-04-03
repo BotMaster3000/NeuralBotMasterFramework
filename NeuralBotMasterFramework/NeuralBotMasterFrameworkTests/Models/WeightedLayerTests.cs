@@ -32,8 +32,40 @@ namespace NeuralBotMasterFramework.Models.Tests
         public void ConstructorTest_SetupNodesCorrectly()
         {
             const int TOTAL_NODES = 15;
-            WeightedLayer layer = new WeightedLayer(TOTAL_NODES);
+            const int PREVIOUS_NODES = 3;
+            WeightedLayer layer = new WeightedLayer(TOTAL_NODES, PREVIOUS_NODES);
             Assert.AreEqual(TOTAL_NODES, layer.Nodes.Length);
+        }
+
+        [TestMethod]
+        public void SetValuesTest()
+        {
+            Random rand = new Random();
+            const int TOTAL_NODES = 2;
+            const int PREVIOUS_NODES = 2;
+            double[] input = new double[TOTAL_NODES]
+            {
+                rand.NextDouble(),
+                rand.NextDouble(),
+            };
+            WeightedLayer layer = new WeightedLayer(TOTAL_NODES, PREVIOUS_NODES);
+            layer.SetValues(input);
+        }
+
+        [TestMethod]
+        public void GetValuesTest()
+        {
+            Random rand = new Random();
+            const int TOTAL_NODES = 3;
+            const int PREVIOUS_NODES = 2;
+            double[] input = new double[TOTAL_NODES]
+            {
+                rand.NextDouble(),
+                rand.NextDouble(),
+                rand.NextDouble(),
+            };
+            WeightedLayer layer = new WeightedLayer(TOTAL_NODES, PREVIOUS_NODES);
+            Assert.AreEqual(layer.Nodes.Length, layer.GetValues().Length);
         }
     }
 }
