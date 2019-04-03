@@ -32,9 +32,37 @@ namespace NeuralBotMasterFramework.Models.Tests
         }
 
         [TestMethod]
-        public void ApplyWeightTest()
+        public void SetValueTest()
         {
-            Assert.Fail();
+            Random rand = new Random();
+            double[] weights = new double[]
+            {
+                rand.NextDouble(),
+                rand.NextDouble(),
+            };
+            double[] values = new double[]
+            {
+                rand.NextDouble(),
+                rand.NextDouble(),
+            };
+            WeightedNode node = new WeightedNode()
+            {
+                Weights = weights,
+            };
+            node.SetValue(values);
+            double weightedValue = CalculateWeights(values, weights);
+            Assert.AreEqual(weightedValue, node.Value);
+        }
+
+        private double CalculateWeights(double[] values, double[] weights)
+        {
+            Assert.AreEqual(values.Length, weights.Length);
+            double value = 0;
+            for (int i = 0; i < values.Length; ++i)
+            {
+                value += values[i] * weights[i];
+            }
+            return value;
         }
     }
 }

@@ -9,6 +9,6 @@ namespace NeuralBotMasterFramework.Interfaces
     public interface IWeightedNode : INode
     {
         double[] Weights { get; set; }
-        void ApplyWeight();
+        void SetValue(double[] unweightedValues);
     }
 }
