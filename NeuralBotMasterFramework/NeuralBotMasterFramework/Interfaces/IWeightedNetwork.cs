@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NeuralBotMasterFramework.Interfaces
 {
-    public interface IWeightedNode : INode
+    public interface IWeightedNetwork : INetwork
     {
-        decimal[] Weights { get; set; }
-        void ApplyWeight();
+        new IWeightedLayer[] HiddenLayers { get; set; }
+        new IWeightedLayer OutputLayer { get; set; }
     }
 }

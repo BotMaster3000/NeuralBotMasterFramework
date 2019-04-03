@@ -44,6 +44,7 @@
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\INetwork.cs" />
     <Compile Include="Interfaces\IWeightedLayer.cs" />
+    <Compile Include="Interfaces\IWeightedNetwork.cs" />
     <Compile Include="Interfaces\IWeightedNode.cs" />
     <Compile Include="Interfaces\INode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
