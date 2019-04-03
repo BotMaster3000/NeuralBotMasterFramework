@@ -47,6 +47,7 @@
     <Compile Include="Interfaces\IWeightedNetwork.cs" />
     <Compile Include="Interfaces\IWeightedNode.cs" />
     <Compile Include="Interfaces\INode.cs" />
+    <Compile Include="Models\Layer.cs" />
     <Compile Include="Models\Node.cs" />
     <Compile Include="Models\WeightedNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

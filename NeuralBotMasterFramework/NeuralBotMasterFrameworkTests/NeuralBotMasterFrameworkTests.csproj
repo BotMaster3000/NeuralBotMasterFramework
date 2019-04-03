@@ -56,6 +56,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Models\LayerTests.cs" />
     <Compile Include="Models\NodeTests.cs" />
     <Compile Include="Models\WeightedNodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
