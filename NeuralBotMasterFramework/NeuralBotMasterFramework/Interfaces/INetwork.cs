@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NeuralBotMasterFramework.Interfaces
 {
-    public interface IWeightedLayer : ILayer
+    public interface INetwork
     {
-        new IWeightedNode[] Nodes { get; set; }
+
     }
 }

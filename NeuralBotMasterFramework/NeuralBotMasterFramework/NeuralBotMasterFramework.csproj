@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IInputLayer.cs" />
+    <Compile Include="Interfaces\ILayer.cs" />
+    <Compile Include="Interfaces\INetwork.cs" />
     <Compile Include="Interfaces\IWeightedLayer.cs" />
     <Compile Include="Interfaces\IWeightedNode.cs" />
     <Compile Include="Interfaces\INode.cs" />
