@@ -32,6 +32,7 @@ namespace NeuralBotMasterFramework.Logic
             for(int i = 0; i < totalHiddenLayers; ++i)
             {
                 HiddenLayers[i] = new WeightedLayer(totalHiddenNodesPerLayer, previousNodes);
+                previousNodes = HiddenLayers[i].Nodes.Length;
             }
         }
 
@@ -52,8 +53,13 @@ namespace NeuralBotMasterFramework.Logic
 
         public void Propagate()
         {
-            throw new NotImplementedException();
+            double[] values = InputLayer.GetValues();
+            for(int i = 0; i < HiddenLayers.Length; ++i)
+            {
+                HiddenLayers[i].SetValues(values);
+                values = HiddenLayers[i].GetValues();
+            }
+            OutputLayer.SetValues(values);
         }
-
     }
 }

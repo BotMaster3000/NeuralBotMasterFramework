@@ -30,20 +30,7 @@ namespace NeuralBotMasterFramework.Models
 
         public void SetValues(double[] input)
         {
-            if (ArraysAreSameLength(input.Length))
-            {
-                SetInput(input);
-            }
-        }
-
-        private bool ArraysAreSameLength(int length)
-        {
-            return Nodes.Length == length;
-        }
-
-        private void SetInput(double[] input)
-        {
-            for (int i = 0; i < input.Length; ++i)
+            for (int i = 0; i < Nodes.Length; ++i)
             {
                 Nodes[i].SetValue(input);
             }
@@ -52,7 +39,7 @@ namespace NeuralBotMasterFramework.Models
         public double[] GetValues()
         {
             double[] returnValues = new double[Nodes.Length];
-            for(int i = 0; i < returnValues.Length; ++i)
+            for (int i = 0; i < returnValues.Length; ++i)
             {
                 returnValues[i] = Nodes[i].Value;
             }

@@ -15,8 +15,8 @@ namespace NeuralBotMasterFramework.Logic.Tests
     public class WeightedNetworkTests
     {
         private const int INPUT_NODES = 3;
-        private const int HIDDEN_LAYERS = 5;
-        private const int HIDDEN_NODES_PER_LAYER = 10;
+        private const int HIDDEN_LAYERS = 2;
+        private const int HIDDEN_NODES_PER_LAYER = 4;
         private const int OUTPUT_NODES = 3;
         private readonly WeightedNetwork network = new WeightedNetwork(INPUT_NODES, HIDDEN_LAYERS, HIDDEN_NODES_PER_LAYER, OUTPUT_NODES);
 
@@ -62,7 +62,19 @@ namespace NeuralBotMasterFramework.Logic.Tests
         [TestMethod]
         public void PropagateTest()
         {
-            Assert.Fail();
+            double[] input = new double[INPUT_NODES]
+            {
+                RandomNumberGenerator.GetNextDouble(),
+                RandomNumberGenerator.GetNextDouble(),
+                RandomNumberGenerator.GetNextDouble(),
+            };
+            network.SetInput(input);
+            network.Propagate();
+
+            foreach(double result in network.GetOutput())
+            {
+                Assert.AreNotEqual(0, result);
+            }
         }
     }
 }
