@@ -56,6 +56,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Helper\RandomNumberGeneratorTests.cs" />
+    <Compile Include="Logic\WeightedNetworkTests.cs" />
     <Compile Include="Models\LayerTests.cs" />
     <Compile Include="Models\NodeTests.cs" />
     <Compile Include="Models\WeightedLayerTests.cs" />

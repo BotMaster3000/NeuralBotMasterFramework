@@ -20,5 +20,13 @@ namespace NeuralBotMasterFramework.Models.Tests
             };
             Assert.AreEqual(nodes, layer.Nodes);
         }
+
+        [TestMethod]
+        public void ConstructorTest_SetupNodesCorrectly()
+        {
+            const int TOTAL_NODES = 10;
+            Layer layer = new Layer(TOTAL_NODES);
+            Assert.AreEqual(TOTAL_NODES, layer.Nodes.Length);
+        }
     }
 }

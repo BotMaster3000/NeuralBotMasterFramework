@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NeuralBotMasterFramework.Interfaces;
+using NeuralBotMasterFramework.Helper;
 
 namespace NeuralBotMasterFramework.Models
 {
@@ -11,6 +12,23 @@ namespace NeuralBotMasterFramework.Models
     {
         public double[] Weights { get; set; }
         public double Value { get; set; }
+
+        public WeightedNode() { }
+
+        public WeightedNode(int previousLayerNodes)
+        {
+            InitializeWeights(previousLayerNodes);
+        }
+
+        private void InitializeWeights(int totalWeights)
+        {
+            Random rand = new Random();
+            Weights = new double[totalWeights];
+            for(int i = 0; i < Weights.Length; ++i)
+            {
+                Weights[i] = RandomNumberGenerator.GetNextDouble();
+            }
+        }
 
         public void SetValue(double[] unweightedValues)
         {

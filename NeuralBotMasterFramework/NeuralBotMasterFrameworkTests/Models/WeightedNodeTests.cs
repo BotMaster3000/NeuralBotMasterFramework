@@ -64,5 +64,21 @@ namespace NeuralBotMasterFramework.Models.Tests
             }
             return value;
         }
+
+        [TestMethod]
+        public void ConstructorTest_GeneratesRandomStarterWeight()
+        {
+            const int PREVIOUS_LAYER_NODES = 42;
+            WeightedNode node = new WeightedNode(PREVIOUS_LAYER_NODES);
+            Assert.AreEqual(PREVIOUS_LAYER_NODES, node.Weights.Length);
+
+            double previousNumber = 0.0;
+            foreach(double weight in node.Weights)
+            {
+                Assert.IsTrue(weight != 0.0);
+                Assert.AreNotEqual(weight, previousNumber);
+                previousNumber = weight;
+            }
+        }
     }
 }
