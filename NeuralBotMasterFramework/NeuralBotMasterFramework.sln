@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralBotMasterFramework", "NeuralBotMasterFramework\NeuralBotMasterFramework.csproj", "{7EAA0C8F-376F-4BDF-AA8B-6491C820C4CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralBotMasterFrameworkTests", "NeuralBotMasterFrameworkTests\NeuralBotMasterFrameworkTests.csproj", "{2AA4C65A-0B92-424E-94BD-86A90AD4D7AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EAA0C8F-376F-4BDF-AA8B-6491C820C4CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EAA0C8F-376F-4BDF-AA8B-6491C820C4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EAA0C8F-376F-4BDF-AA8B-6491C820C4CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EAA0C8F-376F-4BDF-AA8B-6491C820C4CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA4C65A-0B92-424E-94BD-86A90AD4D7AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA4C65A-0B92-424E-94BD-86A90AD4D7AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA4C65A-0B92-424E-94BD-86A90AD4D7AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA4C65A-0B92-424E-94BD-86A90AD4D7AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27D06720-FC95-4C07-BCE5-24FAFD90601E}
+	EndGlobalSection
+EndGlobal
