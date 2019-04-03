@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\INode.cs" />
     <Compile Include="Models\Layer.cs" />
     <Compile Include="Models\Node.cs" />
+    <Compile Include="Models\WeightedLayer.cs" />
     <Compile Include="Models\WeightedNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
