@@ -42,12 +42,12 @@ namespace NeuralBotMasterFramework.Logic
 
         public void SetInput(double[] input)
         {
-            throw new NotImplementedException();
+            InputLayer.SetValues(input);
         }
 
         public double[] GetOutput()
         {
-            throw new NotImplementedException();
+            return OutputLayer.GetValues();
         }
 
         public void Propagate()

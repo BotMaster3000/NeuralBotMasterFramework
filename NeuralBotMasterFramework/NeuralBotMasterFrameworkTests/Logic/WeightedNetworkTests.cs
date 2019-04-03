@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NeuralBotMasterFramework.Models;
 using NeuralBotMasterFramework.Interfaces;
+using NeuralBotMasterFramework.Helper;
 
 namespace NeuralBotMasterFramework.Logic.Tests
 {
@@ -47,7 +48,15 @@ namespace NeuralBotMasterFramework.Logic.Tests
         [TestMethod]
         public void GetOutputTest()
         {
-            Assert.Fail();
+            double[] input = new double[INPUT_NODES]
+            {
+                RandomNumberGenerator.GetNextDouble(),
+                RandomNumberGenerator.GetNextDouble(),
+                RandomNumberGenerator.GetNextDouble(),
+            };
+            network.SetInput(input);
+            double[] result = network.GetOutput();
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
