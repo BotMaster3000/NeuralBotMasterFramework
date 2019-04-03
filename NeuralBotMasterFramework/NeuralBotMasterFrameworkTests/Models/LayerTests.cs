@@ -1,6 +1,7 @@
 ﻿using NeuralBotMasterFramework.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NeuralBotMasterFramework.Interfaces;
+using NeuralBotMasterFramework.Helper;
 
 namespace NeuralBotMasterFramework.Models.Tests
 {
@@ -31,15 +32,24 @@ namespace NeuralBotMasterFramework.Models.Tests
         }
 
         [TestMethod]
-        public void SetValuesTest()
+        public void Set_And_Get_ValuesTest()
         {
-            Assert.Fail();
-        }
+            const int TOTAL_NODES = 3;
 
-        [TestMethod]
-        public void GetValuesTest()
-        {
-            Assert.Fail();
+            double[] input = new double[TOTAL_NODES]
+            {
+                RandomNumberGenerator.GetNextDouble(),
+                RandomNumberGenerator.GetNextDouble(),
+                RandomNumberGenerator.GetNextDouble(),
+            };
+
+            Layer layer = new Layer(TOTAL_NODES);
+            layer.SetValues(input);
+            double[] results = layer.GetValues();
+            for(int i = 0; i < input.Length; ++i)
+            {
+                Assert.AreEqual(input[i], results[i]);
+            }
         }
     }
 }

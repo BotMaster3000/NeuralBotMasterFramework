@@ -30,12 +30,33 @@ namespace NeuralBotMasterFramework.Models
 
         public void SetValues(double[] input)
         {
-            throw new NotImplementedException();
+            if (ArraysAreOfSameLength(input.Length))
+            {
+                SetInput(input);
+            }
+        }
+
+        private bool ArraysAreOfSameLength(int length)
+        {
+            return Nodes.Length == length;
+        }
+
+        private void SetInput(double[] input)
+        {
+            for(int i = 0; i < input.Length; ++i)
+            {
+                Nodes[i].Value = input[i];
+            }
         }
 
         public double[] GetValues()
         {
-            throw new NotImplementedException();
+            double[] results = new double[Nodes.Length];
+            for(int i = 0; i < results.Length; ++i)
+            {
+                results[i] = Nodes[i].Value;
+            }
+            return results;
         }
     }
 }
