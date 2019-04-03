@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\IInputLayer.cs" />
     <Compile Include="Interfaces\IWeightedLayer.cs" />
-    <Compile Include="Interfaces\IWeightingNode.cs" />
+    <Compile Include="Interfaces\IWeightedNode.cs" />
     <Compile Include="Interfaces\INode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

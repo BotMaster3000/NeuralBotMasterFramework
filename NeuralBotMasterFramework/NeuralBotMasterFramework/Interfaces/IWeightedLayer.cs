@@ -8,6 +8,6 @@ namespace NeuralBotMasterFramework.Interfaces
 {
     public interface IWeightedLayer
     {
-        IWeightingNode[] Nodes { get; set; }
+        IWeightedNode[] Nodes { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralBotMasterFramework.Interfaces
 {
-    public interface IWeightingNode : INode
+    public interface IWeightedNode : INode
     {
         decimal Weight { get; set; }
         void ApplyWeight();
