@@ -14,6 +14,6 @@ namespace NeuralBotMasterFramework.Interfaces
 
         void SetInput();
         void Propagate();
-        decimal[] GetOutput();
+        double[] GetOutput();
     }
 }

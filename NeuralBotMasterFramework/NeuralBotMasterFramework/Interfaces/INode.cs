@@ -8,6 +8,6 @@ namespace NeuralBotMasterFramework.Interfaces
 {
     public interface INode
     {
-        decimal Value { get; set; }
+        double Value { get; set; }
     }
 }
