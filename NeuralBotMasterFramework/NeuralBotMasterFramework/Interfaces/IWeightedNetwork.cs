@@ -8,7 +8,7 @@ namespace NeuralBotMasterFramework.Interfaces
 {
     public interface IWeightedNetwork : INetwork
     {
-        new IWeightedLayer[] HiddenLayers { get; set; }
-        new IWeightedLayer OutputLayer { get; set; }
+        IWeightedLayer[] HiddenLayers { get; set; }
+        IWeightedLayer OutputLayer { get; set; }
     }
 }
