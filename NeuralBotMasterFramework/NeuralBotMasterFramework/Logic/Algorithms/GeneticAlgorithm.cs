@@ -44,9 +44,9 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         public void SetInput(double[] input)
         {
             CurrentInput = (double[])input.Clone();
-            foreach(KeyValuePair<IWeightedNetwork, int> NetworkAndFitness in NetworksAndFitness)
+            foreach(IWeightedNetwork network in NetworksAndFitness.Keys)
             {
-                NetworkAndFitness.Key.SetInput(CurrentInput);
+                network.SetInput(CurrentInput);
             }
         }
 
