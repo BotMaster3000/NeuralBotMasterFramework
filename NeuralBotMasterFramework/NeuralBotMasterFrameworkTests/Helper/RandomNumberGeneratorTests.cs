@@ -24,5 +24,18 @@ namespace NeuralBotMasterFramework.Helper.Tests
                 previousValue = currentValue;
             }
         }
+
+        [TestMethod]
+        public void GetNextIntegerTest()
+        {
+            const int NUMBERS_FROM = 0;
+            const int NUMBERS_TO = 10000;
+            const int TOTAL_ITERATIONS = 1000;
+            for(int i = 0; i < TOTAL_ITERATIONS; ++i)
+            {
+                int currentValue = RandomNumberGenerator.GetNextNumber(NUMBERS_FROM, NUMBERS_TO);
+                Assert.IsTrue(currentValue >= NUMBERS_FROM && currentValue <= NUMBERS_TO);
+            }
+        }
     }
 }

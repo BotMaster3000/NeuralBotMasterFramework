@@ -18,5 +18,13 @@ namespace NeuralBotMasterFramework.Helper
                 return rand.NextDouble();
             }
         }
+
+        public static int GetNextNumber(int numberFrom, int numberTo)
+        {
+            lock (locker)
+            {
+                return rand.Next(numberFrom, numberTo + 1);
+            }
+        }
     }
 }

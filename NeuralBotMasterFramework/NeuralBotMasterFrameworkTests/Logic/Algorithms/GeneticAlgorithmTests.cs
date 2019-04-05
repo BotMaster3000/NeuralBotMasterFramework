@@ -127,6 +127,12 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
             Algorithm.MutationChance = 0.1;
 
             Algorithm.BreedBestNetworks();
+
+            Assert.AreEqual(TOTAL_NETWORKS, Algorithm.NetworksAndFitness.Count);
+            foreach(IWeightedNetwork network in Algorithm.NetworksAndFitness.Keys)
+            {
+                Assert.IsNotNull(network);
+            }
         }
     }
 }
