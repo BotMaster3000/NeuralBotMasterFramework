@@ -18,13 +18,12 @@ namespace NeuralBotMasterFramework.Interfaces
         int HiddenLayers { get; }
         int OutputNodes { get; }
 
-        double[] CurrentInput { get; }
-        double[] CurrentExpected { get; }
+        double[][] CurrentInput { get; }
+        double[][] CurrentExpected { get; }
 
         Dictionary<IWeightedNetwork, double> NetworksAndFitness { get; }
-        void SetupTest(double[] input, double[] expected);
+        void SetupTest(double[][] input, double[][] expected);
         void PropagateAllNetworks();
-        void CalculateFitnesses();
         void SortByFitness();
         void BreedBestNetworks();
     }

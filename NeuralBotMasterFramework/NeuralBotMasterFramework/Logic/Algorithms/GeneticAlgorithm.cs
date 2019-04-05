@@ -22,8 +22,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         public int HiddenLayers { get; private set; }
         public int OutputNodes { get; private set; }
 
-        public double[] CurrentInput { get; private set; }
-        public double[] CurrentExpected { get; private set; }
+        public double[][] CurrentInput { get; private set; }
+        public double[][] CurrentExpected { get; private set; }
 
         public GeneticAlgorithm(int totalNetworks, int inputNodes, int hiddenNodes, int hiddenLayers, int outputNodes)
         {
@@ -44,36 +44,52 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             }
         }
 
-        public void SetupTest(double[] input, double[] expected)
+        public void SetupTest(double[][] input, double[][] expected)
         {
-            CurrentInput = (double[])input.Clone();
-            CurrentExpected = (double[])expected.Clone();
-            foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
-            {
-                network.SetInput(CurrentInput);
-            }
+            CurrentInput = (double[][])input.Clone();
+            CurrentExpected = (double[][])expected.Clone();
+            //foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
+            //{
+            //    network.SetInput(CurrentInput);
+            //}
         }
 
         public void PropagateAllNetworks()
         {
-            foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
+            ResetAllFitnesses();
+            for (int inputIndex = 0; inputIndex < CurrentInput.Length; inputIndex++)
             {
-                network.Propagate();
+                foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
+                {
+                    network.SetInput(CurrentInput[inputIndex]);
+                    network.Propagate();
+                }
+                CalculateFitnesses(CurrentExpected[inputIndex]);
             }
         }
 
-        public void CalculateFitnesses()
+        private void ResetAllFitnesses()
         {
             Dictionary<IWeightedNetwork, double> tempNetworkAndFitness = new Dictionary<IWeightedNetwork, double>();
-            foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
+            foreach(IWeightedNetwork network in NetworksAndFitness.Keys)
             {
-                double fitness = 0;
-                double[] output = network.GetOutput();
+                tempNetworkAndFitness.Add(network, 0);
+            }
+            NetworksAndFitness = tempNetworkAndFitness;
+        }
+
+        private void CalculateFitnesses(double[] expected)
+        {
+            Dictionary<IWeightedNetwork, double> tempNetworkAndFitness = new Dictionary<IWeightedNetwork, double>();
+            foreach (KeyValuePair<IWeightedNetwork, double> networkAndFitness in NetworksAndFitness)
+            {
+                double fitness = networkAndFitness.Value;
+                double[] output = networkAndFitness.Key.GetOutput();
                 for (int i = 0; i < output.Length; ++i)
                 {
-                    fitness += 1 / Math.Pow(output[i] + CurrentExpected[i], 2);
+                    fitness += 1 / Math.Pow(output[i] + expected[i], 2);
                 }
-                tempNetworkAndFitness.Add(network, fitness);
+                tempNetworkAndFitness.Add(networkAndFitness.Key, fitness);
             }
             NetworksAndFitness = tempNetworkAndFitness;
         }
@@ -135,10 +151,10 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             for (int layerIndex = 0; layerIndex < network.HiddenLayers.Length; ++layerIndex)
             {
                 hiddenLayers[layerIndex] = new WeightedLayer();
-                for(int nodeIndex = 0; nodeIndex < network.HiddenLayers[layerIndex].Nodes.Length; ++nodeIndex)
+                for (int nodeIndex = 0; nodeIndex < network.HiddenLayers[layerIndex].Nodes.Length; ++nodeIndex)
                 {
                     hiddenLayers[layerIndex].Nodes = new IWeightedNode[network.HiddenLayers[layerIndex].Nodes.Length];
-                    for(int i = 0; i < hiddenLayers[layerIndex].Nodes.Length; ++i)
+                    for (int i = 0; i < hiddenLayers[layerIndex].Nodes.Length; ++i)
                     {
                         hiddenLayers[layerIndex].Nodes[i] = new WeightedNode()
                         {
@@ -164,12 +180,12 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             {
                 foreach (IWeightedNode node in layer.Nodes)
                 {
-                    for(int i = 0; i < node.Weights.Length; ++i)
+                    for (int i = 0; i < node.Weights.Length; ++i)
                     {
                         if (RandomNumberGenerator.GetNextDouble() <= MutationChance)
                         {
                             double mutation = MutationRate * RandomNumberGenerator.GetNextDouble();
-                            if(RandomNumberGenerator.GetNextDouble() >= 0.5)
+                            if (RandomNumberGenerator.GetNextDouble() >= 0.5)
                             {
                                 mutation *= -1;
                             }
