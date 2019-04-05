@@ -14,7 +14,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         public int NetworksToKeep { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public double MutationRate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public double MutationChance { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<IWeightedNetwork, int> NetworksAndFitness { get; } = new Dictionary<IWeightedNetwork, int>();
+        public Dictionary<IWeightedNetwork, double> NetworksAndFitness { get; private set; } = new Dictionary<IWeightedNetwork, double>();
         public int InputNodes { get; private set; }
         public int HiddenNodes { get; private set; }
         public int HiddenLayers { get; private set; }
@@ -62,7 +62,18 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         public void CalculateFitnesses()
         {
-            throw new NotImplementedException();
+            Dictionary<IWeightedNetwork, double> tempNetworkAndFitness = new Dictionary<IWeightedNetwork, double>();
+            foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
+            {
+                double fitness = 0;
+                double[] output = network.GetOutput();
+                for (int i = 0; i < output.Length; ++i)
+                {
+                    fitness += 1 / Math.Pow(output[i] + CurrentExpected[i], 2);
+                }
+                tempNetworkAndFitness.Add(network, fitness);
+            }
+            NetworksAndFitness = tempNetworkAndFitness;
         }
 
         public void SortByFitness()

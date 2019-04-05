@@ -21,7 +21,7 @@ namespace NeuralBotMasterFramework.Interfaces
         double[] CurrentInput { get; }
         double[] CurrentExpected { get; }
 
-        Dictionary<IWeightedNetwork, int> NetworksAndFitness { get; }
+        Dictionary<IWeightedNetwork, double> NetworksAndFitness { get; }
         void SetupTest(double[] input, double[] expected);
         void PropagateAllNetworks();
         void CalculateFitnesses();

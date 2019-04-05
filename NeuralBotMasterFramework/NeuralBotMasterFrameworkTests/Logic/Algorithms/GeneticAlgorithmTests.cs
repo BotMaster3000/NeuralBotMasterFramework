@@ -85,12 +85,12 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         }
 
         [TestMethod]
-        public void CalculateFitnessesTest()
+        public void CalculateFitnessesTest_ShouldBeHigherThanZero()
         {
             Algorithm.SetupTest(Input, Expected);
             Algorithm.PropagateAllNetworks();
             Algorithm.CalculateFitnesses();
-            foreach (int fitnesses in Algorithm.NetworksAndFitness.Values)
+            foreach (double fitnesses in Algorithm.NetworksAndFitness.Values)
             {
                 Assert.IsTrue(fitnesses > 0);
             }
