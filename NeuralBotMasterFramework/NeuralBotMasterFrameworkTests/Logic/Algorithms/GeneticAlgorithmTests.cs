@@ -20,7 +20,14 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         private const int HIDDEN_LAYERS = 3;
         private const int OUTPUT_NODES = 3;
 
-        private double[] Input = new double[]
+        private double[] Input = new double[INPUT_NODES]
+        {
+            RandomNumberGenerator.GetNextDouble(),
+            RandomNumberGenerator.GetNextDouble(),
+            RandomNumberGenerator.GetNextDouble(),
+        };
+
+        private double[] Expected = new double[OUTPUT_NODES]
         {
             RandomNumberGenerator.GetNextDouble(),
             RandomNumberGenerator.GetNextDouble(),
@@ -37,12 +44,17 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         }
 
         [TestMethod]
-        public void SetInputTest_ShouldCloneInputData()
+        public void SetupTest_ShouldCloneInputAndExpectedData()
         {
-            Algorithm.SetInput(Input);
+            Algorithm.SetupTest(Input, Expected);
             for (int i = 0; i < Input.Length; ++i)
             {
                 Assert.AreEqual(Input[i], Algorithm.CurrentInput[i]);
+            }
+
+            for (int i = 0; i < Expected.Length; ++i)
+            {
+                Assert.AreEqual(Expected[i], Algorithm.CurrentExpected[i]);
             }
 
             Input = new double[]
@@ -50,14 +62,20 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
                 RandomNumberGenerator.GetNextDouble(),
             };
             Assert.AreNotEqual(Input.Length, Algorithm.CurrentInput.Length);
+
+            Expected = new double[]
+            {
+                RandomNumberGenerator.GetNextDouble()
+            };
+            Assert.AreNotEqual(Expected.Length, Algorithm.CurrentExpected.Length);
         }
 
         [TestMethod]
         public void PropagateAllNetworksTest()
         {
-            Algorithm.SetInput(Input);
+            Algorithm.SetupTest(Input, Expected);
             Algorithm.PropagateAllNetworks();
-            foreach (WeightedNetwork network in Algorithm.NetworksAndFitness.Keys)
+            foreach (IWeightedNetwork network in Algorithm.NetworksAndFitness.Keys)
             {
                 foreach (IWeightedNode node in network.OutputLayer.Nodes)
                 {
@@ -69,7 +87,13 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         [TestMethod]
         public void CalculateFitnessesTest()
         {
-            Assert.Fail();
+            Algorithm.SetupTest(Input, Expected);
+            Algorithm.PropagateAllNetworks();
+            Algorithm.CalculateFitnesses();
+            foreach (int fitnesses in Algorithm.NetworksAndFitness.Values)
+            {
+                Assert.IsTrue(fitnesses > 0);
+            }
         }
 
         [TestMethod]

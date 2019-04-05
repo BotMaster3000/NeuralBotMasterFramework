@@ -20,7 +20,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         public int HiddenLayers { get; private set; }
         public int OutputNodes { get; private set; }
 
-        public double[] CurrentInput { get; set; }
+        public double[] CurrentInput { get; private set; }
+        public double[] CurrentExpected { get; private set; }
 
         public GeneticAlgorithm(int totalNetworks, int inputNodes, int hiddenNodes, int hiddenLayers, int outputNodes)
         {
@@ -41,10 +42,11 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             }
         }
 
-        public void SetInput(double[] input)
+        public void SetupTest(double[] input, double[] expected)
         {
             CurrentInput = (double[])input.Clone();
-            foreach(IWeightedNetwork network in NetworksAndFitness.Keys)
+            CurrentExpected = (double[])expected.Clone();
+            foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
             {
                 network.SetInput(CurrentInput);
             }
@@ -52,7 +54,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         public void PropagateAllNetworks()
         {
-            foreach(IWeightedNetwork network in NetworksAndFitness.Keys)
+            foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
             {
                 network.Propagate();
             }
