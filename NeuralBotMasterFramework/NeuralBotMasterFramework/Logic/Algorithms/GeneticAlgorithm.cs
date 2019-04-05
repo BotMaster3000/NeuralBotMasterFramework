@@ -12,15 +12,15 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 {
     public class GeneticAlgorithm : IGeneticAlgorithm
     {
-        public int TotalNetworks { get; private set; }
+        public int TotalNetworks { get; }
         public int NetworksToKeep { get; set; }
         public double MutationRate { get; set; }
         public double MutationChance { get; set; }
         public Dictionary<IWeightedNetwork, double> NetworksAndFitness { get; private set; } = new Dictionary<IWeightedNetwork, double>();
-        public int InputNodes { get; private set; }
-        public int HiddenNodes { get; private set; }
-        public int HiddenLayers { get; private set; }
-        public int OutputNodes { get; private set; }
+        public int InputNodes { get; }
+        public int HiddenNodes { get; }
+        public int HiddenLayers { get; }
+        public int OutputNodes { get; }
 
         public double[][] CurrentInput { get; private set; }
         public double[][] CurrentExpected { get; private set; }
@@ -48,10 +48,6 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         {
             CurrentInput = (double[][])input.Clone();
             CurrentExpected = (double[][])expected.Clone();
-            //foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
-            //{
-            //    network.SetInput(CurrentInput);
-            //}
         }
 
         public void PropagateAllNetworks()
@@ -71,7 +67,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         private void ResetAllFitnesses()
         {
             Dictionary<IWeightedNetwork, double> tempNetworkAndFitness = new Dictionary<IWeightedNetwork, double>();
-            foreach(IWeightedNetwork network in NetworksAndFitness.Keys)
+            foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
             {
                 tempNetworkAndFitness.Add(network, 0);
             }
