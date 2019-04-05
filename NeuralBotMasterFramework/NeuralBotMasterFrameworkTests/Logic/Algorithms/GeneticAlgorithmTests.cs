@@ -18,35 +18,36 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         private const int HIDDEN_LAYERS = 3;
         private const int OUTPUT_NODES = 3;
 
+        private double[] Input = new double[]
+        {
+            RandomNumberGenerator.GetNextDouble(),
+            RandomNumberGenerator.GetNextDouble(),
+            RandomNumberGenerator.GetNextDouble(),
+        };
+
+        private readonly GeneticAlgorithm Algorithm = new GeneticAlgorithm(TOTAL_NETWORKS, INPUT_NODES, HIDDEN_NODES, HIDDEN_LAYERS, OUTPUT_NODES);
+
         [TestMethod]
         public void ConstructorTest()
         {
-            GeneticAlgorithm algorithm = new GeneticAlgorithm(TOTAL_NETWORKS, INPUT_NODES, HIDDEN_NODES, HIDDEN_LAYERS, OUTPUT_NODES);
-            Assert.AreEqual(TOTAL_NETWORKS, algorithm.TotalNetworks);
-            Assert.AreEqual(TOTAL_NETWORKS, algorithm.NetworksAndFitness.Count);
+            Assert.AreEqual(TOTAL_NETWORKS, Algorithm.TotalNetworks);
+            Assert.AreEqual(TOTAL_NETWORKS, Algorithm.NetworksAndFitness.Count);
         }
 
         [TestMethod]
         public void SetInputTest_ShouldCloneInputData()
         {
-            double[] input = new double[]
+            Algorithm.SetInput(Input);
+            for (int i = 0; i < Input.Length; ++i)
             {
-                RandomNumberGenerator.GetNextDouble(),
-                RandomNumberGenerator.GetNextDouble(),
-                RandomNumberGenerator.GetNextDouble(),
-            };
-            GeneticAlgorithm algorithm = new GeneticAlgorithm(TOTAL_NETWORKS, INPUT_NODES, HIDDEN_NODES, HIDDEN_LAYERS, OUTPUT_NODES);
-            algorithm.SetInput(input);
-            for(int i = 0; i < input.Length; ++i)
-            {
-                Assert.AreEqual(input[i], algorithm.CurrentInput[i]);
+                Assert.AreEqual(Input[i], Algorithm.CurrentInput[i]);
             }
 
-            input = new double[]
+            Input = new double[]
             {
                 RandomNumberGenerator.GetNextDouble(),
             };
-            Assert.AreNotEqual(input.Length, algorithm.CurrentInput.Length);
+            Assert.AreNotEqual(Input.Length, Algorithm.CurrentInput.Length);
         }
 
         [TestMethod]
