@@ -104,6 +104,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
             Algorithm.CalculateFitnesses();
             Algorithm.SortByFitness();
 
+            Assert.AreEqual(TOTAL_NETWORKS, Algorithm.NetworksAndFitness.Count);
+
             double previousHighestNumber = Algorithm.NetworksAndFitness.FirstOrDefault().Value;
             for (int i = 1; i < Algorithm.NetworksAndFitness.Count; ++i)
             {
@@ -116,7 +118,15 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         [TestMethod]
         public void BreedBestNetworksTest()
         {
-            Assert.Fail();
+            Algorithm.SetupTest(Input, Expected);
+            Algorithm.PropagateAllNetworks();
+            Algorithm.CalculateFitnesses();
+
+            Algorithm.NetworksToKeep = 10;
+            Algorithm.MutationRate = 0.2;
+            Algorithm.MutationChance = 0.1;
+
+            Algorithm.BreedBestNetworks();
         }
     }
 }

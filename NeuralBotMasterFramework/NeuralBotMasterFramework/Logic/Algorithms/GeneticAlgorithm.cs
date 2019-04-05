@@ -11,9 +11,9 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
     public class GeneticAlgorithm : IGeneticAlgorithm
     {
         public int TotalNetworks { get; private set; }
-        public int NetworksToKeep { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double MutationRate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double MutationChance { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int NetworksToKeep { get; set; }
+        public double MutationRate { get; set; }
+        public double MutationChance { get; set; }
         public Dictionary<IWeightedNetwork, double> NetworksAndFitness { get; private set; } = new Dictionary<IWeightedNetwork, double>();
         public int InputNodes { get; private set; }
         public int HiddenNodes { get; private set; }
@@ -78,19 +78,25 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         public void SortByFitness()
         {
-            Dictionary<IWeightedNetwork, double> tempNetworkAndFitness = new Dictionary<IWeightedNetwork, double>();
-            double currentBiggestFitness = NetworksAndFitness.Max(x => x.Value);
-            tempNetworkAndFitness.Add(NetworksAndFitness.FirstOrDefault(x => x.Value == currentBiggestFitness).Key, currentBiggestFitness);
-            for(int i = 1; i < tempNetworkAndFitness.Count; ++i)
-            {
-                KeyValuePair<IWeightedNetwork, double> networkAndFitness = NetworksAndFitness.Where(x => x.Value < currentBiggestFitness).Max();
-                tempNetworkAndFitness.Add(networkAndFitness.Key, networkAndFitness.Value);
-                currentBiggestFitness = networkAndFitness.Value;
-            }
-            NetworksAndFitness = tempNetworkAndFitness;
+            NetworksAndFitness = NetworksAndFitness.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
         }
 
         public void BreedBestNetworks()
+        {
+            SortByFitness();
+            RemoveUnneccessaryNetworks();
+            BreedNewNetworks();
+
+            throw new NotImplementedException();
+        }
+
+        private void RemoveUnneccessaryNetworks()
+        {
+            List<KeyValuePair<IWeightedNetwork, double>> tempNetworkAndFitnessToKeep = NetworksAndFitness.Take(NetworksToKeep).ToList();
+            NetworksAndFitness = tempNetworkAndFitnessToKeep.ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        private void BreedNewNetworks()
         {
             throw new NotImplementedException();
         }
