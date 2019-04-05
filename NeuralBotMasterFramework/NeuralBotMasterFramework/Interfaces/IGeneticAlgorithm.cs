@@ -13,6 +13,11 @@ namespace NeuralBotMasterFramework.Interfaces
         double MutationRate { get; set; }
         double MutationChance { get; set; }
 
+        int InputNodes { get; set; }
+        int HiddenNodes { get; set; }
+        int HiddenLayers { get; set; }
+        int OutputNodes { get; set; }
+
         Dictionary<IWeightedNetwork, int> NetworksAndFitness { get; set; }
         void SetInput(double[] input);
         void PropagateAllNetworks();
