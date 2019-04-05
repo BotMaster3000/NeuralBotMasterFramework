@@ -8,17 +8,19 @@ namespace NeuralBotMasterFramework.Interfaces
 {
     public interface IGeneticAlgorithm
     {
-        int TotalNetworks { get; set; }
-        int NetworksToKeep { get; set; }
-        double MutationRate { get; set; }
-        double MutationChance { get; set; }
+        int TotalNetworks { get; }
+        int NetworksToKeep { get; }
+        double MutationRate { get; }
+        double MutationChance { get; }
 
-        int InputNodes { get; set; }
-        int HiddenNodes { get; set; }
-        int HiddenLayers { get; set; }
-        int OutputNodes { get; set; }
+        int InputNodes { get; }
+        int HiddenNodes { get; }
+        int HiddenLayers { get; }
+        int OutputNodes { get; }
 
-        Dictionary<IWeightedNetwork, int> NetworksAndFitness { get; set; }
+        double[] CurrentInput { get; }
+
+        Dictionary<IWeightedNetwork, int> NetworksAndFitness { get; }
         void SetInput(double[] input);
         void PropagateAllNetworks();
         void CalculateFitnesses();
