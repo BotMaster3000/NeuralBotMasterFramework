@@ -78,7 +78,16 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         public void SortByFitness()
         {
-            throw new NotImplementedException();
+            Dictionary<IWeightedNetwork, double> tempNetworkAndFitness = new Dictionary<IWeightedNetwork, double>();
+            double currentBiggestFitness = NetworksAndFitness.Max(x => x.Value);
+            tempNetworkAndFitness.Add(NetworksAndFitness.FirstOrDefault(x => x.Value == currentBiggestFitness).Key, currentBiggestFitness);
+            for(int i = 1; i < tempNetworkAndFitness.Count; ++i)
+            {
+                KeyValuePair<IWeightedNetwork, double> networkAndFitness = NetworksAndFitness.Where(x => x.Value < currentBiggestFitness).Max();
+                tempNetworkAndFitness.Add(networkAndFitness.Key, networkAndFitness.Value);
+                currentBiggestFitness = networkAndFitness.Value;
+            }
+            NetworksAndFitness = tempNetworkAndFitness;
         }
 
         public void BreedBestNetworks()

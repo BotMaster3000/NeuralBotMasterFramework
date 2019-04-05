@@ -99,7 +99,18 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         [TestMethod]
         public void SortByFitnessTest()
         {
-            Assert.Fail();
+            Algorithm.SetupTest(Input, Expected);
+            Algorithm.PropagateAllNetworks();
+            Algorithm.CalculateFitnesses();
+            Algorithm.SortByFitness();
+
+            double previousHighestNumber = Algorithm.NetworksAndFitness.FirstOrDefault().Value;
+            for (int i = 1; i < Algorithm.NetworksAndFitness.Count; ++i)
+            {
+                double currentValue = Algorithm.NetworksAndFitness.Values.ElementAt(i);
+                Assert.IsTrue(previousHighestNumber > currentValue);
+                previousHighestNumber = currentValue;
+            }
         }
 
         [TestMethod]
