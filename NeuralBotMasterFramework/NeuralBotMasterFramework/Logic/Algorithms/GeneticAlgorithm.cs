@@ -50,7 +50,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             }
         }
 
-        public void BreedBestNetworks()
+        public void PropagateAllNetworks()
         {
             throw new NotImplementedException();
         }
@@ -60,12 +60,12 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             throw new NotImplementedException();
         }
 
-        public void PropagateAllNetworks()
+        public void SortByFitness()
         {
             throw new NotImplementedException();
         }
 
-        public void SortByFitness()
+        public void BreedBestNetworks()
         {
             throw new NotImplementedException();
         }
