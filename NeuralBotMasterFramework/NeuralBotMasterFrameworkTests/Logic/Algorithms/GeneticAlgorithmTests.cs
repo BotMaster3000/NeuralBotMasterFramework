@@ -50,7 +50,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         }
 
         [TestMethod]
-        public void BreedBestNetworksTest()
+        public void PropagateAllNetworksTest()
         {
             Assert.Fail();
         }
@@ -62,13 +62,13 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         }
 
         [TestMethod]
-        public void PropagateAllNetworksTest()
+        public void SortByFitnessTest()
         {
             Assert.Fail();
         }
 
         [TestMethod]
-        public void SortByFitnessTest()
+        public void BreedBestNetworksTest()
         {
             Assert.Fail();
         }
