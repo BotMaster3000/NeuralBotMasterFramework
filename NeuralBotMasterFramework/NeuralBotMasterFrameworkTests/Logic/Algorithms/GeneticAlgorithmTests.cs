@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NeuralBotMasterFramework.Helper;
+using NeuralBotMasterFramework.Logic.Networks;
+using NeuralBotMasterFramework.Interfaces;
 
 namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
 {
@@ -53,7 +55,15 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         [TestMethod]
         public void PropagateAllNetworksTest()
         {
-            Assert.Fail();
+            Algorithm.SetInput(Input);
+            Algorithm.PropagateAllNetworks();
+            foreach (WeightedNetwork network in Algorithm.NetworksAndFitness.Keys)
+            {
+                foreach (IWeightedNode node in network.OutputLayer.Nodes)
+                {
+                    Assert.AreNotEqual(0, node.Value);
+                }
+            }
         }
 
         [TestMethod]

@@ -52,7 +52,10 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         public void PropagateAllNetworks()
         {
-            throw new NotImplementedException();
+            foreach(IWeightedNetwork network in NetworksAndFitness.Keys)
+            {
+                network.Propagate();
+            }
         }
 
         public void CalculateFitnesses()
