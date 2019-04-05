@@ -83,7 +83,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
                 double[] output = networkAndFitness.Key.GetOutput();
                 for (int i = 0; i < output.Length; ++i)
                 {
-                    fitness += 1 / Math.Pow(output[i] + expected[i], 2);
+                    fitness += 1 / (Math.Pow(output[i] + expected[i], 2) + 1);
                 }
                 tempNetworkAndFitness.Add(networkAndFitness.Key, fitness);
             }
@@ -160,6 +160,13 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
                 }
             }
             IWeightedNode[] outputNodes = (IWeightedNode[])network.OutputLayer.Nodes.Clone();
+            for (int nodeIndex = 0; nodeIndex < outputNodes.Length; ++nodeIndex)
+            {
+                outputNodes[nodeIndex] = new WeightedNode()
+                {
+                    Weights = (double[])network.OutputLayer.Nodes[nodeIndex].Weights.Clone()
+                };
+            }
 
             newNetwork.InputLayer.Nodes = inputNodes;
             newNetwork.HiddenLayers = hiddenLayers;
