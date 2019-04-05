@@ -41,6 +41,15 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             }
         }
 
+        public void SetInput(double[] input)
+        {
+            CurrentInput = (double[])input.Clone();
+            foreach(KeyValuePair<IWeightedNetwork, int> NetworkAndFitness in NetworksAndFitness)
+            {
+                NetworkAndFitness.Key.SetInput(CurrentInput);
+            }
+        }
+
         public void BreedBestNetworks()
         {
             throw new NotImplementedException();
@@ -52,11 +61,6 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         }
 
         public void PropagateAllNetworks()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetInput(double[] input)
         {
             throw new NotImplementedException();
         }
