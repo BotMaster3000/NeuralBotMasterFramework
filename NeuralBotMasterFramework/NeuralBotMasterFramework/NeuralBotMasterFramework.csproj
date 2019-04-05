@@ -50,7 +50,7 @@
     <Compile Include="Interfaces\IWeightedNetwork.cs" />
     <Compile Include="Interfaces\IWeightedNode.cs" />
     <Compile Include="Interfaces\INode.cs" />
-    <Compile Include="Logic\WeightedNetwork.cs" />
+    <Compile Include="Logic\Networks\WeightedNetwork.cs" />
     <Compile Include="Models\Layer.cs" />
     <Compile Include="Models\Node.cs" />
     <Compile Include="Models\WeightedLayer.cs" />

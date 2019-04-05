@@ -9,7 +9,7 @@ using NeuralBotMasterFramework.Models;
 using NeuralBotMasterFramework.Interfaces;
 using NeuralBotMasterFramework.Helper;
 
-namespace NeuralBotMasterFramework.Logic.Tests
+namespace NeuralBotMasterFramework.Logic.Networks.Tests
 {
     [TestClass]
     public class WeightedNetworkTests

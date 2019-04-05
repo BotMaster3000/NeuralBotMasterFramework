@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NeuralBotMasterFramework.Interfaces;
 using NeuralBotMasterFramework.Models;
 
-namespace NeuralBotMasterFramework.Logic
+namespace NeuralBotMasterFramework.Logic.Networks
 {
     public class WeightedNetwork : IWeightedNetwork
     {
