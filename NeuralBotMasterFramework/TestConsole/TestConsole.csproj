@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NeuralBotMasterFramework\NeuralBotMasterFramework.csproj">
+      <Project>{7eaa0c8f-376f-4bdf-aa8b-6491c820c4ca}</Project>
+      <Name>NeuralBotMasterFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
