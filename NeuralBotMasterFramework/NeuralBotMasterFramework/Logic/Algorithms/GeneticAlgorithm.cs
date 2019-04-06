@@ -206,5 +206,50 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
                 }
             }
         }
+
+        public double[] GetFitnesses()
+        {
+            return NetworksAndFitness.Values.ToArray();
+        }
+
+        public void SetFitnesses(double[] fitnesses)
+        {
+            ThrowIfArgumentDoesNotHaveCorrectLength(fitnesses, TotalNetworks);
+
+            Dictionary<IWeightedNetwork, double> tempFitnessAndValues = new Dictionary<IWeightedNetwork, double>();
+            for (int i = 0; i < fitnesses.Length; ++i)
+            {
+                IWeightedNetwork network = NetworksAndFitness.ElementAt(i).Key;
+                tempFitnessAndValues.Add(network, fitnesses[i]);
+            }
+            NetworksAndFitness = tempFitnessAndValues;
+        }
+
+        private void ThrowIfArgumentDoesNotHaveCorrectLength(double[] array, int expectedArrayLength)
+        {
+            if (array.Length != expectedArrayLength)
+            {
+                throw new ArgumentException($"Argument-Length not valid: Expected: {expectedArrayLength} Actual: {array.Length}");
+            }
+        }
+
+        public void SetFitness(int networkIndex, double fitness)
+        {
+            SetFitness(NetworksAndFitness.Keys.ElementAt(networkIndex), fitness);
+        }
+
+        public void SetFitness(IWeightedNetwork network, double fitness)
+        {
+            ThrowIfNetworkNotInDictionary(network);
+            NetworksAndFitness[network] = fitness;
+        }
+
+        private void ThrowIfNetworkNotInDictionary(IWeightedNetwork network)
+        {
+            if (!NetworksAndFitness.Keys.Contains(network))
+            {
+                throw new ArgumentException($"Network not found inside {nameof(NetworksAndFitness)}");
+            }
+        }
     }
 }

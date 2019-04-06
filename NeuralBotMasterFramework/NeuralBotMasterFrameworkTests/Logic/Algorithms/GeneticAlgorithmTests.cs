@@ -20,6 +20,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         private const int HIDDEN_LAYERS = 3;
         private const int OUTPUT_NODES = 3;
 
+        private readonly GeneticAlgorithm Algorithm = new GeneticAlgorithm(TOTAL_NETWORKS, INPUT_NODES, HIDDEN_NODES, HIDDEN_LAYERS, OUTPUT_NODES);
+
         private double[][] Input = new double[][]
         {
             new double[]
@@ -52,7 +54,6 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
             },
         };
 
-        private readonly GeneticAlgorithm Algorithm = new GeneticAlgorithm(TOTAL_NETWORKS, INPUT_NODES, HIDDEN_NODES, HIDDEN_LAYERS, OUTPUT_NODES);
 
         [TestMethod]
         public void ConstructorTest()
@@ -164,6 +165,72 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
             {
                 Assert.IsNotNull(network);
             }
+        }
+
+        [TestMethod]
+        public void SetAndGetFitnesses_CorrectFitnessAmount()
+        {
+            double[] fitnessValues = GetRandomDoubleArray(TOTAL_NETWORKS);
+            Algorithm.SetFitnesses(fitnessValues);
+            double[] resultFitnesses = Algorithm.GetFitnesses();
+
+            Assert.AreEqual(fitnessValues.Length, resultFitnesses.Length);
+            for (int i = 0; i < fitnessValues.Length; i++)
+            {
+                Assert.AreEqual(fitnessValues[i], resultFitnesses[i]);
+            }
+        }
+
+        [TestMethod]
+        public void SetFitnesses_MoreFitnessesThanNetworks_ShouldThrowException()
+        {
+            double[] fitnessValues = GetRandomDoubleArray(TOTAL_NETWORKS + 5);
+            Assert.ThrowsException<ArgumentException>(() => Algorithm.SetFitnesses(fitnessValues), "No Exception when more Fitness-Values than Networks");
+        }
+
+        [TestMethod]
+        public void SetFitnesses_LessFitnessesThanNetworks_ShouldThrowException()
+        {
+            const int TOTAL_DOUBLE_VALUES = TOTAL_NETWORKS - 5;
+            double[] fitnessValues = GetRandomDoubleArray(TOTAL_DOUBLE_VALUES >= 0 ? TOTAL_DOUBLE_VALUES : 0);
+            Assert.ThrowsException<ArgumentException>(() => Algorithm.SetFitnesses(fitnessValues), "No Exception when more Fitness-Values than Networks");
+        }
+
+        private double[] GetRandomDoubleArray(int totalValues)
+        {
+            double[] array = new double[totalValues];
+            for (int i = 0; i < array.Length; ++i)
+            {
+                array[i] = RandomNumberGenerator.GetNextDouble();
+            }
+            return array;
+        }
+
+        [TestMethod]
+        public void SetFitness_IWeightedNetworkAsParameter()
+        {
+            double newValue = RandomNumberGenerator.GetNextDouble();
+            IWeightedNetwork network = Algorithm.NetworksAndFitness.Keys.ElementAt(0);
+            Algorithm.SetFitness(network, newValue);
+            Assert.AreEqual(newValue, Algorithm.NetworksAndFitness.FirstOrDefault(x => x.Key == network).Value);
+        }
+
+        [TestMethod]
+        public void SetFitness_IWeightedNetworkAsParameter_NetworkNotFound_ShouldThrowArgumentException()
+        {
+            double newValue = RandomNumberGenerator.GetNextDouble();
+            IWeightedNetwork network = new WeightedNetwork(INPUT_NODES, HIDDEN_LAYERS, HIDDEN_NODES, OUTPUT_NODES);
+            Assert.ThrowsException<ArgumentException>(() => Algorithm.SetFitness(network, newValue), "No Exception when Network not found");
+        }
+
+        [TestMethod]
+        public void SetFitness_NetworkIndexAsParameter()
+        {
+            int index = RandomNumberGenerator.GetNextNumber(0, Algorithm.NetworksAndFitness.Count);
+            double newFitnessValue = RandomNumberGenerator.GetNextDouble();
+            Algorithm.SetFitness(index, newFitnessValue);
+            KeyValuePair<IWeightedNetwork, double> networkAndFitness = Algorithm.NetworksAndFitness.ElementAt(index);
+            Assert.AreEqual(newFitnessValue, networkAndFitness.Value);
         }
     }
 }

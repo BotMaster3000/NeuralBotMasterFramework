@@ -26,5 +26,9 @@ namespace NeuralBotMasterFramework.Interfaces
         void PropagateAllNetworks();
         void SortByFitness();
         void BreedBestNetworks();
+        double[] GetFitnesses();
+        void SetFitnesses(double[] fitnesses);
+        void SetFitness(int networkIndex, double fitness);
+        void SetFitness(IWeightedNetwork network, double fitness);
     }
 }
