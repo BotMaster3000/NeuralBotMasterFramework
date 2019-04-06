@@ -83,25 +83,42 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
 
             Input = new double[][]
             {
-                new double[] {
-                RandomNumberGenerator.GetNextDouble(),
-                }
+                new double[] { RandomNumberGenerator.GetNextDouble(), }
             };
             Assert.AreNotEqual(Input.Length, Algorithm.CurrentInput.Length);
 
             Expected = new double[][]
             {
-                new double[] {
-                RandomNumberGenerator.GetNextDouble(),
-                },
+                new double[] { RandomNumberGenerator.GetNextDouble() },
             };
             Assert.AreNotEqual(Expected.Length, Algorithm.CurrentExpected.Length);
+        }
+
+        [TestMethod]
+        public void SetupTest_SecondParameterShouldBeOptional()
+        {
+            Algorithm.SetupTest(Input);
+            Assert.IsNull(Algorithm.CurrentExpected);
         }
 
         [TestMethod]
         public void PropagateAllNetworksTest()
         {
             Algorithm.SetupTest(Input, Expected);
+            Algorithm.PropagateAllNetworks();
+            foreach (IWeightedNetwork network in Algorithm.NetworksAndFitness.Keys)
+            {
+                foreach (IWeightedNode node in network.OutputLayer.Nodes)
+                {
+                    Assert.AreNotEqual(0, node.Value);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void PropagateAllNetworksTest_NoExpectedInput()
+        {
+            Algorithm.SetupTest(Input);
             Algorithm.PropagateAllNetworks();
             foreach (IWeightedNetwork network in Algorithm.NetworksAndFitness.Keys)
             {

@@ -44,10 +44,10 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             }
         }
 
-        public void SetupTest(double[][] input, double[][] expected)
+        public void SetupTest(double[][] input, double[][] expected = null)
         {
             CurrentInput = (double[][])input.Clone();
-            CurrentExpected = (double[][])expected.Clone();
+            CurrentExpected = (double[][])expected?.Clone();
         }
 
         public void PropagateAllNetworks()
@@ -60,8 +60,16 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
                     network.SetInput(CurrentInput[inputIndex]);
                     network.Propagate();
                 }
-                CalculateFitnesses(CurrentExpected[inputIndex]);
+                if (CurrentExpectedIsSet())
+                {
+                    CalculateFitnesses(CurrentExpected[inputIndex]);
+                }
             }
+        }
+
+        private bool CurrentExpectedIsSet()
+        {
+            return CurrentExpected?.Length >= 0;
         }
 
         private void ResetAllFitnesses()
