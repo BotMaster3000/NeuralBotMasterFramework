@@ -50,9 +50,10 @@ namespace NeuralBotMasterFramework.Models
 
         private void WeightValues(double[] unweightedValues)
         {
+            double[] weights = Weights;
             for (int i = 0; i < unweightedValues.Length; ++i)
             {
-                Value += unweightedValues[i] * Weights[i];
+                Value += unweightedValues[i] * weights[i];
             }
         }
     }
