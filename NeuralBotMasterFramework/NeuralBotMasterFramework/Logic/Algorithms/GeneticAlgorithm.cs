@@ -23,6 +23,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         public int HiddenLayers { get; }
         public int OutputNodes { get; }
 
+        public IBreedingPoolGenerator PoolGenerator { get; set; } = new PoolGenerators.IndexBasedPoolGenerator();
+
         public double[][] CurrentInput { get; private set; }
         public double[][] CurrentExpected { get; private set; }
 
@@ -131,16 +133,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         private List<IWeightedNetwork> GetBreedingPool()
         {
-            List<IWeightedNetwork> networkAndLikelinesToBreed = new List<IWeightedNetwork>();
-            for (int networkIndex = 0; networkIndex < NetworksToKeep; ++networkIndex)
-            {
-                IWeightedNetwork currentNetwork = NetworksAndFitness.Keys.ElementAt(networkIndex);
-                for (int i = 0; i < NetworksToKeep - networkIndex; ++i)
-                {
-                    networkAndLikelinesToBreed.Add(currentNetwork);
-                }
-            }
-            return networkAndLikelinesToBreed;
+            return PoolGenerator.GenerateBreedingPool(NetworksAndFitness);
         }
 
         private void BreedNetworks(List<IWeightedNetwork> networkAndLikelinesToBreed)

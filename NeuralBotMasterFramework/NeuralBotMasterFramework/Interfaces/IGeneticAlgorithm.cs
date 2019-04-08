@@ -14,6 +14,8 @@ namespace NeuralBotMasterFramework.Interfaces
         double MutationRate { get; }
         double MutationChance { get; }
 
+        IBreedingPoolGenerator PoolGenerator { get; }
+
         int InputNodes { get; }
         int HiddenNodes { get; }
         int HiddenLayers { get; }
