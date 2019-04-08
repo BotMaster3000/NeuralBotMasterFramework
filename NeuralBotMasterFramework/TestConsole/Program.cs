@@ -25,6 +25,7 @@ namespace TestConsole
             int outputNodes = totalNumberLength;
 
             int networksToKeep = 100;
+            int totalRandomNetworks = 100;
             double mutationRate = 0.2;
             double mutationChance = 0.4;
 
@@ -40,6 +41,7 @@ namespace TestConsole
             algorithm.NetworksToKeep = networksToKeep;
             algorithm.MutationRate = mutationRate;
             algorithm.MutationChance = mutationChance;
+            algorithm.RandomNetworkAmount = totalRandomNetworks;
 
             Console.WriteLine("Initialization complete");
 

@@ -49,7 +49,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         private void AddNewNetwork()
         {
-            NetworksAndFitness.Add(new WeightedNetwork(InputNodes, HiddenLayers, HiddenLayers, OutputNodes), 0);
+            NetworksAndFitness.Add(new WeightedNetwork(InputNodes, HiddenLayers, HiddenNodes, OutputNodes), 0);
         }
 
         public void SetupTest(double[][] input, double[][] expected = null)
@@ -126,8 +126,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         private void BreedNewNetworks()
         {
-            AddNewNetworks(RandomNetworkAmount);
             List<IWeightedNetwork> networkAndLikelinesToBreed = GetBreedingPool();
+            AddNewNetworks(RandomNetworkAmount);
             BreedNetworks(networkAndLikelinesToBreed);
         }
 
