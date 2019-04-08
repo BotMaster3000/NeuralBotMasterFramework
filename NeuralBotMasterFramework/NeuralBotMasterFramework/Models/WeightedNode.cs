@@ -22,7 +22,6 @@ namespace NeuralBotMasterFramework.Models
 
         private void InitializeWeights(int totalWeights)
         {
-            Random rand = new Random();
             Weights = new double[totalWeights];
             for(int i = 0; i < Weights.Length; ++i)
             {
