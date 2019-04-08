@@ -14,6 +14,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
     {
         public int TotalNetworks { get; }
         public int NetworksToKeep { get; set; }
+        public int RandomNetworkAmount { get; set; }
         public double MutationRate { get; set; }
         public double MutationChance { get; set; }
         public Dictionary<IWeightedNetwork, double> NetworksAndFitness { get; private set; } = new Dictionary<IWeightedNetwork, double>();
@@ -33,15 +34,20 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             HiddenLayers = hiddenLayers;
             OutputNodes = outputNodes;
 
-            InitializeNetworks();
+            AddNewNetworks(TotalNetworks);
         }
 
-        private void InitializeNetworks()
+        private void AddNewNetworks(int amount)
         {
-            for (int i = 0; i < TotalNetworks; ++i)
+            for (int i = 0; i < amount; ++i)
             {
-                NetworksAndFitness.Add(new WeightedNetwork(InputNodes, HiddenLayers, HiddenLayers, OutputNodes), 0);
+                AddNewNetwork();
             }
+        }
+
+        private void AddNewNetwork()
+        {
+            NetworksAndFitness.Add(new WeightedNetwork(InputNodes, HiddenLayers, HiddenLayers, OutputNodes), 0);
         }
 
         public void SetupTest(double[][] input, double[][] expected = null)
@@ -118,6 +124,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         private void BreedNewNetworks()
         {
+            AddNewNetworks(RandomNetworkAmount);
             List<IWeightedNetwork> networkAndLikelinesToBreed = GetBreedingPool();
             BreedNetworks(networkAndLikelinesToBreed);
         }

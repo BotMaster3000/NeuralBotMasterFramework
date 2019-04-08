@@ -10,6 +10,7 @@ namespace NeuralBotMasterFramework.Interfaces
     {
         int TotalNetworks { get; }
         int NetworksToKeep { get; }
+        int RandomNetworkAmount { get; }
         double MutationRate { get; }
         double MutationChance { get; }
 
