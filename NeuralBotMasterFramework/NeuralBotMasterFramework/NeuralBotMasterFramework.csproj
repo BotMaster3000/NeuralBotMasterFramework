@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\INode.cs" />
     <Compile Include="Logic\Algorithms\GeneticAlgorithm.cs" />
     <Compile Include="Logic\Networks\WeightedNetwork.cs" />
+    <Compile Include="Logic\PoolGenerators\FitnessBasedPoolGenerator.cs" />
     <Compile Include="Logic\PoolGenerators\IndexBasedPoolGenerator.cs" />
     <Compile Include="Models\Layer.cs" />
     <Compile Include="Models\Node.cs" />

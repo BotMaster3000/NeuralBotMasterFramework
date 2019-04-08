@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NeuralBotMasterFramework.Logic.Algorithms;
+using NeuralBotMasterFramework.Logic.PoolGenerators;
 
 namespace TestConsole
 {
@@ -23,13 +24,16 @@ namespace TestConsole
             int hiddenLayers = 3;
             int outputNodes = totalNumberLength;
 
-            int networksToKeep = 10;
+            int networksToKeep = 100;
             double mutationRate = 0.2;
             double mutationChance = 0.4;
 
             SetupBinaryData();
 
-            GeneticAlgorithm algorithm = new GeneticAlgorithm(totalNetworks, inputNodes, hiddenNodes, hiddenLayers, outputNodes);
+            GeneticAlgorithm algorithm = new GeneticAlgorithm(totalNetworks, inputNodes, hiddenNodes, hiddenLayers, outputNodes)
+            {
+                PoolGenerator = new IndexBasedPoolGenerator()
+            };
 
             algorithm.SetupTest(inputData, expectedData);
 

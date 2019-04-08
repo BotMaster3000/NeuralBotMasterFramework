@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Helper\RandomNumberGeneratorTests.cs" />
     <Compile Include="Logic\Algorithms\GeneticAlgorithmTests.cs" />
+    <Compile Include="Logic\PoolGenerators\FitnessBasedPoolGeneratorTests.cs" />
     <Compile Include="Logic\WeightedNetworkTests.cs" />
     <Compile Include="Models\LayerTests.cs" />
     <Compile Include="Models\NodeTests.cs" />
