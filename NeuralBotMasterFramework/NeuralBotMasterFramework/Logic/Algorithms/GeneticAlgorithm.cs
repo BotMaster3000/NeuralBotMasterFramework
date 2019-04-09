@@ -23,6 +23,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         public int HiddenLayers { get; }
         public int OutputNodes { get; }
 
+        private int internalIdCounter;
+
         public IBreedingPoolGenerator PoolGenerator { get; set; } = new PoolGenerators.IndexBasedPoolGenerator();
 
         public double[][] CurrentInput { get; private set; }
@@ -49,7 +51,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         private void AddNewNetwork()
         {
-            NetworksAndFitness.Add(new WeightedNetwork(InputNodes, HiddenLayers, HiddenNodes, OutputNodes), 0);
+            NetworksAndFitness.Add(new WeightedNetwork(InputNodes, HiddenLayers, HiddenNodes, OutputNodes) { ID = internalIdCounter}, 0);
+            ++internalIdCounter;
         }
 
         public void SetupTest(double[][] input, double[][] expected = null)
@@ -149,6 +152,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         private IWeightedNetwork BreedNewNetwork(IWeightedNetwork network)
         {
             IWeightedNetwork newNetwork = new WeightedNetwork(InputNodes, HiddenLayers, HiddenNodes, OutputNodes);
+            newNetwork.ID = internalIdCounter;
+            ++internalIdCounter;
 
             INode[] inputNodes = (INode[])network.InputLayer.Nodes.Clone();
             IWeightedLayer[] hiddenLayers = new IWeightedLayer[HiddenLayers];

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NeuralBotMasterFramework.Interfaces;
 using NeuralBotMasterFramework.Logic.Algorithms;
 using NeuralBotMasterFramework.Logic.PoolGenerators;
 
@@ -13,21 +14,21 @@ namespace TestConsole
         private static double[][] inputData;
         private static double[][] expectedData;
 
-        const int TOTAL_BITS = 3;
+        const int TOTAL_BITS = 8;
         private static int totalNumberLength = Math.Pow(2, TOTAL_BITS).ToString().Length;
 
         static void Main(string[] args)
         {
-            int totalNetworks = 1000;
+            int totalNetworks = 100;
             int inputNodes = TOTAL_BITS;
             int hiddenNodes = 10;
             int hiddenLayers = 3;
             int outputNodes = totalNumberLength;
 
-            int networksToKeep = 100;
-            int totalRandomNetworks = 100;
-            double mutationRate = 0.2;
-            double mutationChance = 0.4;
+            int networksToKeep = 10;
+            int totalRandomNetworks = 10;
+            double mutationRate = 0.1;
+            double mutationChance = 0.1;
 
             SetupBinaryData();
 
@@ -60,7 +61,8 @@ namespace TestConsole
         {
             for (int i = 0; i < 10; ++i)
             {
-                Console.WriteLine($"Fitness {algorithm.NetworksAndFitness.Values.ElementAt(i)}");
+                KeyValuePair<IWeightedNetwork, double> networkAndFitness = algorithm.NetworksAndFitness.ElementAt(i);
+                Console.WriteLine($"Fitness {networkAndFitness.Value} ID: {networkAndFitness.Key.ID}");
             }
             Console.WriteLine();
         }

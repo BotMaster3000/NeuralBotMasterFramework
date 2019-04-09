@@ -14,6 +14,8 @@ namespace NeuralBotMasterFramework.Logic.Networks
         public IWeightedLayer[] HiddenLayers { get; set; }
         public IWeightedLayer OutputLayer { get; set; }
 
+        public int ID { get; set; }
+
         public WeightedNetwork(int inputNodes, int hiddenLayers, int hiddenNodesPerLayer, int outputNodes)
         {
             InitializeInputNodes(inputNodes);
