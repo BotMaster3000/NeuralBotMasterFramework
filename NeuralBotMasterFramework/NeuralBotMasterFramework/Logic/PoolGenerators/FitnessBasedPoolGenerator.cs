@@ -30,7 +30,7 @@ namespace NeuralBotMasterFramework.Logic.PoolGenerators
         private double[] MultiplyUntilBiggerThanOne(double[] values)
         {
             double[] returnValues = (double[])values.Clone();
-            while (returnValues.Min() < 1)
+            while (returnValues.Where(x => x > 0).Min() < 1)
             {
                 for (int i = 0; i < returnValues.Length; ++i)
                 {
