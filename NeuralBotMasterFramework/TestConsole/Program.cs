@@ -14,7 +14,7 @@ namespace TestConsole
         private static double[][] inputData;
         private static double[][] expectedData;
 
-        const int TOTAL_BITS = 8;
+        const int TOTAL_BITS = 2;
         private static int totalNumberLength = Math.Pow(2, TOTAL_BITS).ToString().Length;
 
         static void Main(string[] args)
@@ -22,13 +22,13 @@ namespace TestConsole
             int totalNetworks = 100;
             int inputNodes = TOTAL_BITS;
             int hiddenNodes = 10;
-            int hiddenLayers = 3;
+            int hiddenLayers = 2;
             int outputNodes = totalNumberLength;
 
             int networksToKeep = 10;
             int totalRandomNetworks = 10;
             double mutationRate = 0.1;
-            double mutationChance = 0.1;
+            double mutationChance = 0.0011;
 
             SetupBinaryData();
 

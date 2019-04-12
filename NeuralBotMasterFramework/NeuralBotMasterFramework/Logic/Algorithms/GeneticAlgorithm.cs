@@ -102,7 +102,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
                 double[] output = networkAndFitness.Key.GetOutput();
                 for (int i = 0; i < output.Length; ++i)
                 {
-                    fitness += 1 / (Math.Pow(output[i] + expected[i], 2) + 1);
+                    fitness += 1 / (Math.Pow(output[i] - expected[i], 2) + 1);
                 }
                 tempNetworkAndFitness.Add(networkAndFitness.Key, fitness);
             }
