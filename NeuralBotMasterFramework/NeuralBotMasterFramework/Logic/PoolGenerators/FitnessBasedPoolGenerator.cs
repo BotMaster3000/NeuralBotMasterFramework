@@ -10,10 +10,10 @@ namespace NeuralBotMasterFramework.Logic.PoolGenerators
 {
     public class FitnessBasedPoolGenerator : IBreedingPoolGenerator
     {
-        public List<IWeightedNetwork> GenerateBreedingPool(Dictionary<IWeightedNetwork, double> networksAndFitness)
+        public List<IWeightedNetwork> GenerateBreedingPool(IList<KeyValuePair<IWeightedNetwork, double>> networksAndFitness)
         {
             List<IWeightedNetwork> poolList = new List<IWeightedNetwork>();
-            double[] fitnesses = MultiplyUntilBiggerThanOne(networksAndFitness.Values.ToArray());
+            double[] fitnesses = MultiplyUntilBiggerThanOne(networksAndFitness.Select(x => x.Value).ToArray());
             int totalFitness = (int)Math.Round(fitnesses.Sum(), 0, MidpointRounding.AwayFromZero);
             for (int networkIndex = 0; networkIndex < networksAndFitness.Count; ++networkIndex)
             {

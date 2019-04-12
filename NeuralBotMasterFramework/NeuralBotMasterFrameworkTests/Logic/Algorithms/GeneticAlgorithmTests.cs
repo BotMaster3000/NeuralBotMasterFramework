@@ -107,7 +107,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         {
             Algorithm.SetupTest(Input, Expected);
             Algorithm.PropagateAllNetworks();
-            foreach (IWeightedNetwork network in Algorithm.NetworksAndFitness.Keys)
+            foreach (IWeightedNetwork network in Algorithm.NetworksAndFitness.Select(x => x.Key))
             {
                 foreach (IWeightedNode node in network.OutputLayer.Nodes)
                 {
@@ -121,7 +121,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         {
             Algorithm.SetupTest(Input);
             Algorithm.PropagateAllNetworks();
-            foreach (IWeightedNetwork network in Algorithm.NetworksAndFitness.Keys)
+            foreach (IWeightedNetwork network in Algorithm.NetworksAndFitness.Select(x => x.Key))
             {
                 foreach (IWeightedNode node in network.OutputLayer.Nodes)
                 {
@@ -142,7 +142,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
             double previousHighestNumber = Algorithm.NetworksAndFitness.FirstOrDefault().Value;
             for (int i = 1; i < Algorithm.NetworksAndFitness.Count; ++i)
             {
-                double currentValue = Algorithm.NetworksAndFitness.Values.ElementAt(i);
+                double currentValue = Algorithm.NetworksAndFitness.Select(x => x.Value).ElementAt(i);
                 Assert.IsTrue(previousHighestNumber > currentValue);
                 previousHighestNumber = currentValue;
             }
@@ -161,7 +161,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
             Algorithm.BreedBestNetworks();
 
             Assert.AreEqual(TOTAL_NETWORKS, Algorithm.NetworksAndFitness.Count);
-            foreach (IWeightedNetwork network in Algorithm.NetworksAndFitness.Keys)
+            foreach (IWeightedNetwork network in Algorithm.NetworksAndFitness.Select(x => x.Key))
             {
                 Assert.IsNotNull(network);
             }
@@ -210,7 +210,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         public void SetFitness_IWeightedNetworkAsParameter()
         {
             double newValue = RandomNumberGenerator.GetNextDouble();
-            IWeightedNetwork network = Algorithm.NetworksAndFitness.Keys.ElementAt(0);
+            IWeightedNetwork network = Algorithm.NetworksAndFitness.Select(x => x.Key).ElementAt(0);
             Algorithm.SetFitness(network, newValue);
             Assert.AreEqual(newValue, Algorithm.NetworksAndFitness.FirstOrDefault(x => x.Key == network).Value);
         }
@@ -229,7 +229,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
             int index = RandomNumberGenerator.GetNextNumber(0, Algorithm.NetworksAndFitness.Count);
             double newFitnessValue = RandomNumberGenerator.GetNextDouble();
             Algorithm.SetFitness(index, newFitnessValue);
-            KeyValuePair<IWeightedNetwork, double> networkAndFitness = Algorithm.NetworksAndFitness.ElementAt(index);
+            KeyValuePair<IWeightedNetwork, double> networkAndFitness = Algorithm.NetworksAndFitness[index];
             Assert.AreEqual(newFitnessValue, networkAndFitness.Value);
         }
     }

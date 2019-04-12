@@ -30,7 +30,7 @@ namespace NeuralBotMasterFramework.Logic.PoolGenerators.Tests
             algorithm.PropagateAllNetworks();
             algorithm.SortByFitness();
             FitnessBasedPoolGenerator generator = new FitnessBasedPoolGenerator();
-            List<IWeightedNetwork> networkList = generator.GenerateBreedingPool(algorithm.NetworksAndFitness.Take(NETWORKS_TO_KEEP).ToDictionary(x => x.Key, x => x.Value));
+            List<IWeightedNetwork> networkList = generator.GenerateBreedingPool(algorithm.NetworksAndFitness.Take(NETWORKS_TO_KEEP).ToList());
             Assert.IsTrue(networkList.Count > 0);
         }
 
@@ -40,7 +40,7 @@ namespace NeuralBotMasterFramework.Logic.PoolGenerators.Tests
         {
             algorithm.SetFitness(0, 100);
             IBreedingPoolGenerator generator = new FitnessBasedPoolGenerator();
-            List<IWeightedNetwork> networkList = generator.GenerateBreedingPool(algorithm.NetworksAndFitness.Take(NETWORKS_TO_KEEP).ToDictionary(x => x.Key, x => x.Value));
+            List<IWeightedNetwork> networkList = generator.GenerateBreedingPool(algorithm.NetworksAndFitness.Take(NETWORKS_TO_KEEP).ToList());
             Assert.IsTrue(networkList.Count > 0);
         }
 

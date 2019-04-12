@@ -8,6 +8,6 @@ namespace NeuralBotMasterFramework.Interfaces
 {
     public interface IBreedingPoolGenerator
     {
-        List<IWeightedNetwork> GenerateBreedingPool(Dictionary<IWeightedNetwork, double> networksAndFitness);
+        List<IWeightedNetwork> GenerateBreedingPool(IList<KeyValuePair<IWeightedNetwork, double>> networksAndFitness);
     }
 }

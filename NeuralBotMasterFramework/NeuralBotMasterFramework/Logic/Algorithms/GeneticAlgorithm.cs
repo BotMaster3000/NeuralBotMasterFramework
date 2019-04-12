@@ -17,7 +17,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         public int RandomNetworkAmount { get; set; }
         public double MutationRate { get; set; }
         public double MutationChance { get; set; }
-        public Dictionary<IWeightedNetwork, double> NetworksAndFitness { get; private set; } = new Dictionary<IWeightedNetwork, double>();
+        public IList<KeyValuePair<IWeightedNetwork, double>> NetworksAndFitness { get; private set; } = new List<KeyValuePair<IWeightedNetwork, double>>();
         public int InputNodes { get; }
         public int HiddenNodes { get; }
         public int HiddenLayers { get; }
@@ -51,7 +51,7 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         private void AddNewNetwork()
         {
-            NetworksAndFitness.Add(new WeightedNetwork(InputNodes, HiddenLayers, HiddenNodes, OutputNodes) { ID = internalIdCounter}, 0);
+            NetworksAndFitness.Add(new KeyValuePair<IWeightedNetwork, double>(new WeightedNetwork(InputNodes, HiddenLayers, HiddenNodes, OutputNodes) { ID = internalIdCounter }, 0));
             ++internalIdCounter;
         }
 
@@ -66,10 +66,10 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             ResetAllFitnesses();
             for (int inputIndex = 0; inputIndex < CurrentInput.Length; inputIndex++)
             {
-                foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
+                foreach (KeyValuePair<IWeightedNetwork, double> networkAndFitness in NetworksAndFitness)
                 {
-                    network.SetInput(CurrentInput[inputIndex]);
-                    network.Propagate();
+                    networkAndFitness.Key.SetInput(CurrentInput[inputIndex]);
+                    networkAndFitness.Key.Propagate();
                 }
                 if (CurrentExpectedIsSet())
                 {
@@ -85,17 +85,17 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         private void ResetAllFitnesses()
         {
-            Dictionary<IWeightedNetwork, double> tempNetworkAndFitness = new Dictionary<IWeightedNetwork, double>();
-            foreach (IWeightedNetwork network in NetworksAndFitness.Keys)
+            IList<KeyValuePair<IWeightedNetwork, double>> tempNetworkAndFitness = new List<KeyValuePair<IWeightedNetwork, double>>();
+            foreach (KeyValuePair<IWeightedNetwork, double> networkAndFitness in NetworksAndFitness)
             {
-                tempNetworkAndFitness.Add(network, 0);
+                tempNetworkAndFitness.Add(new KeyValuePair<IWeightedNetwork, double>(networkAndFitness.Key, 0));
             }
             NetworksAndFitness = tempNetworkAndFitness;
         }
 
         private void CalculateFitnesses(double[] expected)
         {
-            Dictionary<IWeightedNetwork, double> tempNetworkAndFitness = new Dictionary<IWeightedNetwork, double>();
+            IList<KeyValuePair<IWeightedNetwork, double>> tempNetworkAndFitness = new List<KeyValuePair<IWeightedNetwork, double>>();
             foreach (KeyValuePair<IWeightedNetwork, double> networkAndFitness in NetworksAndFitness)
             {
                 double fitness = networkAndFitness.Value;
@@ -104,14 +104,14 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
                 {
                     fitness += 1 / (Math.Pow(output[i] - expected[i], 2) + 1);
                 }
-                tempNetworkAndFitness.Add(networkAndFitness.Key, fitness);
+                tempNetworkAndFitness.Add(new KeyValuePair<IWeightedNetwork, double>(networkAndFitness.Key, fitness));
             }
             NetworksAndFitness = tempNetworkAndFitness;
         }
 
         public void SortByFitness()
         {
-            NetworksAndFitness = NetworksAndFitness.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            NetworksAndFitness = NetworksAndFitness.OrderByDescending(x => x.Value).ToList();
         }
 
         public void BreedBestNetworks()
@@ -123,13 +123,13 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         private void RemoveUnneccessaryNetworks()
         {
-            List<KeyValuePair<IWeightedNetwork, double>> tempNetworkAndFitnessToKeep = NetworksAndFitness.Take(NetworksToKeep).ToList();
-            NetworksAndFitness = tempNetworkAndFitnessToKeep.ToDictionary(x => x.Key, x => x.Value);
+            IList<KeyValuePair<IWeightedNetwork, double>> tempNetworkAndFitnessToKeep = NetworksAndFitness.Take(NetworksToKeep).ToList();
+            NetworksAndFitness = tempNetworkAndFitnessToKeep.ToList();
         }
 
         private void BreedNewNetworks()
         {
-            List<IWeightedNetwork> networkAndLikelinesToBreed = GetBreedingPool();
+            IList<IWeightedNetwork> networkAndLikelinesToBreed = GetBreedingPool();
             AddNewNetworks(RandomNetworkAmount);
             BreedNetworks(networkAndLikelinesToBreed);
         }
@@ -139,13 +139,13 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             return PoolGenerator.GenerateBreedingPool(NetworksAndFitness);
         }
 
-        private void BreedNetworks(List<IWeightedNetwork> networkAndLikelinesToBreed)
+        private void BreedNetworks(IList<IWeightedNetwork> networkAndLikelinesToBreed)
         {
             while (NetworksAndFitness.Count < TotalNetworks)
             {
                 int networkIndex = RandomNumberGenerator.GetNextNumber(0, networkAndLikelinesToBreed.Count - 1);
                 IWeightedNetwork network = BreedNewNetwork(networkAndLikelinesToBreed[networkIndex]);
-                NetworksAndFitness.Add(network, 0);
+                NetworksAndFitness.Add(new KeyValuePair<IWeightedNetwork, double>(network, 0));
             }
         }
 
@@ -214,18 +214,18 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         public double[] GetFitnesses()
         {
-            return NetworksAndFitness.Values.ToArray();
+            return NetworksAndFitness.Select(x => x.Value).ToArray();
         }
 
         public void SetFitnesses(double[] fitnesses)
         {
             ThrowIfArgumentDoesNotHaveCorrectLength(fitnesses, TotalNetworks);
 
-            Dictionary<IWeightedNetwork, double> tempFitnessAndValues = new Dictionary<IWeightedNetwork, double>();
+            IList<KeyValuePair<IWeightedNetwork, double>> tempFitnessAndValues = new List<KeyValuePair<IWeightedNetwork, double>>();
             for (int i = 0; i < fitnesses.Length; ++i)
             {
                 IWeightedNetwork network = NetworksAndFitness.ElementAt(i).Key;
-                tempFitnessAndValues.Add(network, fitnesses[i]);
+                tempFitnessAndValues.Add(new KeyValuePair<IWeightedNetwork, double>(network, fitnesses[i]));
             }
             NetworksAndFitness = tempFitnessAndValues;
         }
@@ -240,18 +240,20 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
 
         public void SetFitness(int networkIndex, double fitness)
         {
-            SetFitness(NetworksAndFitness.Keys.ElementAt(networkIndex), fitness);
+            SetFitness(NetworksAndFitness.Select(x => x.Key).ElementAt(networkIndex), fitness);
         }
 
         public void SetFitness(IWeightedNetwork network, double fitness)
         {
             ThrowIfNetworkNotInDictionary(network);
-            NetworksAndFitness[network] = fitness;
+            KeyValuePair<IWeightedNetwork, double> temp = NetworksAndFitness.FirstOrDefault(x => x.Key == network);
+            int index = NetworksAndFitness.IndexOf(temp);
+            NetworksAndFitness[index] = new KeyValuePair<IWeightedNetwork, double>(network, fitness);
         }
 
         private void ThrowIfNetworkNotInDictionary(IWeightedNetwork network)
         {
-            if (!NetworksAndFitness.Keys.Contains(network))
+            if (!NetworksAndFitness.Select(x => x.Key).Contains(network))
             {
                 throw new ArgumentException($"Network not found inside {nameof(NetworksAndFitness)}");
             }
