@@ -39,6 +39,7 @@ namespace NeuralBotMasterFramework.Logic.PoolGenerators.Tests
         public void GenerateBreedingPool_ZeroFitnessScore_ShouldIgnoreZeroFitnesses()
         {
             algorithm.SetFitness(0, 100);
+            algorithm.SortByFitness();
             IBreedingPoolGenerator generator = new FitnessBasedPoolGenerator();
             List<IWeightedNetwork> networkList = generator.GenerateBreedingPool(algorithm.NetworksAndFitness.Take(NETWORKS_TO_KEEP).ToList());
             Assert.IsTrue(networkList.Count > 0);

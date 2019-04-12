@@ -247,8 +247,8 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
         {
             ThrowIfNetworkNotInDictionary(network);
             KeyValuePair<IWeightedNetwork, double> temp = NetworksAndFitness.FirstOrDefault(x => x.Key == network);
-            int index = NetworksAndFitness.IndexOf(temp);
-            NetworksAndFitness[index] = new KeyValuePair<IWeightedNetwork, double>(network, fitness);
+            NetworksAndFitness.Remove(temp);
+            NetworksAndFitness.Add(new KeyValuePair<IWeightedNetwork, double>(network, fitness));
         }
 
         private void ThrowIfNetworkNotInDictionary(IWeightedNetwork network)

@@ -227,10 +227,10 @@ namespace NeuralBotMasterFramework.Logic.Algorithms.Tests
         public void SetFitness_NetworkIndexAsParameter()
         {
             int index = RandomNumberGenerator.GetNextNumber(0, Algorithm.NetworksAndFitness.Count);
-            double newFitnessValue = RandomNumberGenerator.GetNextDouble();
-            Algorithm.SetFitness(index, newFitnessValue);
-            KeyValuePair<IWeightedNetwork, double> networkAndFitness = Algorithm.NetworksAndFitness[index];
-            Assert.AreEqual(newFitnessValue, networkAndFitness.Value);
+            double newValue = RandomNumberGenerator.GetNextDouble();
+            IWeightedNetwork network = Algorithm.NetworksAndFitness.Select(x => x.Key).ElementAt(index);
+            Algorithm.SetFitness(index, newValue);
+            Assert.AreEqual(newValue, Algorithm.NetworksAndFitness.FirstOrDefault(x => x.Key == network).Value);
         }
     }
 }
