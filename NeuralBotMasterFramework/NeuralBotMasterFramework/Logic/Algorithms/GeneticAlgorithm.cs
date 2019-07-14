@@ -66,16 +66,27 @@ namespace NeuralBotMasterFramework.Logic.Algorithms
             ResetAllFitnesses();
             for (int inputIndex = 0; inputIndex < CurrentInput.Length; inputIndex++)
             {
+                Task[] tasks = new Task[NetworksAndFitness.Count];
+                int listIndex = 0;
                 foreach (KeyValuePair<IWeightedNetwork, double> networkAndFitness in NetworksAndFitness)
                 {
-                    networkAndFitness.Key.SetInput(CurrentInput[inputIndex]);
-                    networkAndFitness.Key.Propagate();
+                    tasks[listIndex] = Task.Factory.StartNew(()
+                        => PropagateNetworkTask(networkAndFitness, inputIndex));
+
+                    ++listIndex;
                 }
+                Task.WaitAll(tasks);
                 if (CurrentExpectedIsSet())
                 {
                     CalculateFitnesses(CurrentExpected[inputIndex]);
                 }
             }
+        }
+
+        private void PropagateNetworkTask(KeyValuePair<IWeightedNetwork, double> networkAndFitness, int inputIndex)
+        {
+            networkAndFitness.Key.SetInput(CurrentInput[inputIndex]);
+            networkAndFitness.Key.Propagate();
         }
 
         private bool CurrentExpectedIsSet()
