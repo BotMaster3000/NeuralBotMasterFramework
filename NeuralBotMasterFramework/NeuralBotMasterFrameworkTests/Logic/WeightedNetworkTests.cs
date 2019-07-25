@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NeuralBotMasterFramework.Logic.Networks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NeuralBotMasterFramework.Logic;
 using System;
 using System.Collections.Generic;
@@ -71,9 +72,42 @@ namespace NeuralBotMasterFramework.Logic.Networks.Tests
             network.SetInput(input);
             network.Propagate();
 
-            foreach(double result in network.GetOutput())
+            foreach (double result in network.GetOutput())
             {
                 Assert.AreNotEqual(0, result);
+            }
+        }
+
+        [TestMethod]
+        public void SaveNetworkTest()
+        {
+            WeightedNetwork network = new WeightedNetwork(5, 3, 200, 9);
+            string savedNetwork = network.SaveNetwork();
+
+            WeightedNetwork loadedNetwork = (WeightedNetwork)network.LoadNetwork(savedNetwork);
+            Assert.AreEqual(network.InputLayer?.Nodes.Length, loadedNetwork.InputLayer?.Nodes.Length);
+            Assert.AreEqual(network.HiddenLayers?.Length, loadedNetwork.HiddenLayers?.Length);
+            Assert.AreEqual(network.OutputLayer?.Nodes.Length, loadedNetwork.OutputLayer?.Nodes.Length);
+
+            for (int hiddenLayerIndex = 0; hiddenLayerIndex < network.HiddenLayers.Length; hiddenLayerIndex++)
+            {
+                IWeightedLayer firstNetworkHiddenLayer = network.HiddenLayers[hiddenLayerIndex];
+                IWeightedLayer loadedNetworkHiddenLayer = loadedNetwork.HiddenLayers[hiddenLayerIndex];
+                Assert.AreEqual(firstNetworkHiddenLayer?.Nodes?.Length, loadedNetworkHiddenLayer?.Nodes.Length);
+
+                for (int hiddenlayerNodeIndex = 0; hiddenlayerNodeIndex < firstNetworkHiddenLayer.Nodes.Length; hiddenlayerNodeIndex++)
+                {
+                    IWeightedNode firstNetworkHiddenNode = firstNetworkHiddenLayer.Nodes[hiddenlayerNodeIndex];
+                    IWeightedNode loadedNetworkHiddenNode = loadedNetworkHiddenLayer.Nodes[hiddenlayerNodeIndex];
+                    Assert.AreEqual(firstNetworkHiddenNode.Value, loadedNetworkHiddenNode.Value);
+
+                    for(int networkHiddenNodeWeightIndex = 0; networkHiddenNodeWeightIndex < firstNetworkHiddenNode.Weights.Length; ++networkHiddenNodeWeightIndex)
+                    {
+                        double firstNetworkWeight = firstNetworkHiddenNode.Weights[networkHiddenNodeWeightIndex];
+                        double loadedNetworkWeight = loadedNetworkHiddenNode.Weights[networkHiddenNodeWeightIndex];
+                        Assert.AreEqual(firstNetworkWeight, loadedNetworkWeight);
+                    }
+                }
             }
         }
     }

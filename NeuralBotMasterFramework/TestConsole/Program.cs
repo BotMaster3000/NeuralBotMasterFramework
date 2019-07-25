@@ -14,25 +14,25 @@ namespace TestConsole
         private static double[][] inputData;
         private static double[][] expectedData;
 
-        private static int dataSetsPerPropagation = 1000;
+        private static int dataSetsPerPropagation = 500;
         private static double[][] currentInputData;
         private static double[][] currentExpectedData;
 
-        const int TOTAL_BITS = 12;
+        const int TOTAL_BITS = 2;
         private static int totalNumberLength = Math.Pow(2, TOTAL_BITS).ToString().Length;
 
         static void Main(string[] args)
         {
-            int totalNetworks = 1000;
+            int totalNetworks = 10000;
             int inputNodes = TOTAL_BITS;
             int hiddenNodes = 10;
-            int hiddenLayers = 2;
+            int hiddenLayers = 5;
             int outputNodes = totalNumberLength;
 
-            int networksToKeep = 10;
-            int totalRandomNetworks = 10;
-            double mutationRate = 0.01;
-            double mutationChance = 0.01;
+            int networksToKeep = 100;
+            int totalRandomNetworks = 1000;
+            double mutationRate = 0.5;
+            double mutationChance = 0.5;
 
             SetupBinaryData();
 
@@ -58,7 +58,7 @@ namespace TestConsole
                 algorithm.PropagateAllNetworks();
                 Console.WriteLine("Breeding");
                 algorithm.BreedBestNetworks();
-                if (generation % 20 == 0)
+                if (generation % 10 == 0)
                 {
                     PrintData(algorithm);
                 }

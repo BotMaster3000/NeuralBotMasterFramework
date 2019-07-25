@@ -5,16 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using NeuralBotMasterFramework.Interfaces;
 using NeuralBotMasterFramework.Models;
+using Newtonsoft.Json;
+using NeuralBotMasterFramework.Helper;
 
 namespace NeuralBotMasterFramework.Logic.Networks
 {
-    public class WeightedNetwork : IWeightedNetwork
+    public class WeightedNetwork : IWeightedNetwork, ISaveableNetwork
     {
+        [JsonConverter(typeof(ConcreteTypeConverter<Layer>))]
         public ILayer InputLayer { get; set; }
+
+        [JsonConverter(typeof(ConcreteTypeConverter<WeightedLayer[]>))]
         public IWeightedLayer[] HiddenLayers { get; set; }
+
+        [JsonConverter(typeof(ConcreteTypeConverter<WeightedLayer>))]
         public IWeightedLayer OutputLayer { get; set; }
 
         public int ID { get; set; }
+
+        // Required for JSON-Deserialization
+        public WeightedNetwork() { }
 
         public WeightedNetwork(int inputNodes, int hiddenLayers, int hiddenNodesPerLayer, int outputNodes)
         {
@@ -31,7 +41,7 @@ namespace NeuralBotMasterFramework.Logic.Networks
         private void InitializeHiddenNodes(int totalHiddenLayers, int totalHiddenNodesPerLayer, int previousNodes)
         {
             HiddenLayers = new IWeightedLayer[totalHiddenLayers];
-            for(int i = 0; i < totalHiddenLayers; ++i)
+            for (int i = 0; i < totalHiddenLayers; ++i)
             {
                 HiddenLayers[i] = new WeightedLayer(totalHiddenNodesPerLayer, previousNodes);
                 previousNodes = HiddenLayers[i].Nodes.Length;
@@ -56,12 +66,22 @@ namespace NeuralBotMasterFramework.Logic.Networks
         public void Propagate()
         {
             double[] values = InputLayer.GetValues();
-            for(int i = 0; i < HiddenLayers.Length; ++i)
+            for (int i = 0; i < HiddenLayers.Length; ++i)
             {
                 HiddenLayers[i].SetValues(values);
                 values = HiddenLayers[i].GetValues();
             }
             OutputLayer.SetValues(values);
+        }
+
+        public string SaveNetwork()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+        public ISaveableNetwork LoadNetwork(string networkString)
+        {
+            return (ISaveableNetwork)JsonConvert.DeserializeObject(networkString, typeof(WeightedNetwork));
         }
     }
 }

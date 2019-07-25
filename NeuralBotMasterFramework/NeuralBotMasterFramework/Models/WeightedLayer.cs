@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using NeuralBotMasterFramework.Interfaces;
 using NeuralBotMasterFramework.Models;
+using Newtonsoft.Json;
+using NeuralBotMasterFramework.Helper;
 
 namespace NeuralBotMasterFramework.Models
 {
     public class WeightedLayer : IWeightedLayer
     {
+        [JsonConverter(typeof(ConcreteTypeConverter<WeightedNode[]>))]
         public IWeightedNode[] Nodes { get; set; }
 
         public WeightedLayer() { }

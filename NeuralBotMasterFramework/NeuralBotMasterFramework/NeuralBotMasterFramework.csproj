@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\ConcreteTypeConverter.cs" />
     <Compile Include="Helper\RandomNumberGenerator.cs" />
     <Compile Include="Interfaces\IBaseLayer.cs" />
     <Compile Include="Interfaces\IBreedingPoolGenerator.cs" />
     <Compile Include="Interfaces\IGeneticAlgorithm.cs" />
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\INetwork.cs" />
+    <Compile Include="Interfaces\ISaveableNetwork.cs" />
     <Compile Include="Interfaces\IWeightedLayer.cs" />
     <Compile Include="Interfaces\IWeightedNetwork.cs" />
     <Compile Include="Interfaces\IWeightedNode.cs" />
@@ -61,6 +66,8 @@
     <Compile Include="Models\WeightedNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

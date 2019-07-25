@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using NeuralBotMasterFramework.Interfaces;
 using NeuralBotMasterFramework.Models;
+using Newtonsoft.Json;
+using NeuralBotMasterFramework.Helper;
 
 namespace NeuralBotMasterFramework.Models
 {
     public class Layer : ILayer
     {
+        [JsonConverter(typeof(ConcreteTypeConverter<Node[]>))]
         public INode[] Nodes { get; set; }
 
         public Layer() { }
